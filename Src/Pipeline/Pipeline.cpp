@@ -36,11 +36,14 @@ void Pipeline::renderObject(buffer<float>& VBO, buffer<unsigned int>& VAO)
 
 void Pipeline::setPixel(float* pixel_data)
 {
-		int x = floor(pixel_data[0]);
-		int y = m_image_buffer_height - 1 - floor(pixel_data[1]);
-		m_image_buffer[x + y * m_image_buffer_width][0] = pixel_data[2];
-		m_image_buffer[x + y * m_image_buffer_width][1] = pixel_data[3];
-		m_image_buffer[x + y * m_image_buffer_width][2] = pixel_data[4];
+
+	int x = floor(pixel_data[0]);
+	int y = m_image_buffer_height - 1 - floor(pixel_data[1]);
+	if (x >= m_image_buffer_width || x < 0 || y >= m_image_buffer_height || y < 0)
+		return;
+	m_image_buffer[x + y * m_image_buffer_width][0] = pixel_data[2];
+	m_image_buffer[x + y * m_image_buffer_width][1] = pixel_data[3];
+	m_image_buffer[x + y * m_image_buffer_width][2] = pixel_data[4];
 }
 
 void Pipeline::processVertices(buffer<float>& output_VBO, buffer<unsigned int>& output_VAO, buffer<float>& input_VBO, buffer<unsigned int>& input_VAO)
