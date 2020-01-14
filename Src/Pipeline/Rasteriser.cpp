@@ -70,7 +70,7 @@ void Rasteriser::fillTriangle(buffer<float>& output_fragments, buffer<float>& ri
 			output_fragments.push_back(x);
 			output_fragments.push_back(y);
 			for (int j = 2; j < m_fragment_size; j++)
-				output_fragments.push_back(triangle.vertex[index][j]);
+				output_fragments.push_back((triangle.vertex[0][j]+ triangle.vertex[1][j]+ triangle.vertex[2][j])/3);
 			x -= 1;
 		}
 	}

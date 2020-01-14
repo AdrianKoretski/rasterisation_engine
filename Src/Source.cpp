@@ -14,12 +14,32 @@ struct vert
 
 int main()
 {
-	Pipeline pipeline(40, 40);
+	Pipeline pipeline(200, 200);
 
 	buffer<float> VBO;
-	VBO.resize(16 * 7);
+	buffer<unsigned int> VAO;
+	VBO.resize(8 * 7);
 	vert* vertices = (vert*)VBO.data();
-	vertices[0] = vert(0.0f, -0.5f, 0, 1);
+	vertices[0] = vert( 0.5f, 0.5f, 0.5f, 1);
+	vertices[1] = vert( 0.5f, 0.5f,-0.5f, 1);
+	vertices[2] = vert( 0.5f,-0.5f, 0.5f, 1);
+	vertices[3] = vert( 0.5f,-0.5f,-0.5f, 1);
+	vertices[4] = vert(-0.5f, 0.5f, 0.5f, 1);
+	vertices[5] = vert(-0.5f, 0.5f,-0.5f, 1);
+	vertices[6] = vert(-0.5f,-0.5f, 0.5f, 1);
+	vertices[7] = vert(-0.5f,-0.5f,-0.5f, 1);
+
+	VAO.push_back(0);
+	VAO.push_back(4);
+	VAO.push_back(6);
+	VAO.push_back(0);
+	VAO.push_back(6);
+	VAO.push_back(2);
+
+	for (int i = 0; i < 16; i++)
+		vertices[i].color = v3f((i >> 2) % 2, (i >> 1) % 2, i % 2);
+
+	/*vertices[0] = vert(0.0f, -0.5f, 0, 1);
 	vertices[1] = vert(0.0f, 0.5f, 0, 1);
 	vertices[2] = vert(-0.5f, 0.f, 0, 1);
 	vertices[0] = vert(0.15f, 0.55f, 0, 1);
@@ -44,10 +64,11 @@ int main()
 	vertices[14] = vert(-0.95f, 0.25f, 0, 1);
 	vertices[15] = vert(-0.95f, 0.75f, 0, 1);
 
+	//for (int i = 0; i < 16; i++)
+		//vertices[i].color = v3f((float(rand() % 101)) / 100, (float(rand() % 101)) / 100, (float(rand() % 101)) / 100);
 	for (int i = 0; i < 16; i++)
-		vertices[i].color = v3f((float(rand() % 101)) / 100, (float(rand() % 101)) / 100, (float(rand() % 101)) / 100);
-	
-	buffer<unsigned int> VAO;
+		vertices[i].color = v3f((i>>2)%2, (i>>1)%2, i%2);
+
 	VAO.push_back(0);
 	VAO.push_back(1);
 	VAO.push_back(2);
@@ -114,7 +135,7 @@ int main()
 	VAO.push_back(8);
 	VAO.push_back(10);
 	VAO.push_back(8);
-	VAO.push_back(11);
+	VAO.push_back(11);*/
 
 	pipeline.renderObject(VBO, VAO);
 }
