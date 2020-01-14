@@ -1,5 +1,6 @@
 #include "Rasteriser.h"
 #include <iostream>
+#include <random>
 
 Rasteriser::Rasteriser(unsigned int width_resolution, unsigned int height_resolution)
 {
@@ -29,8 +30,6 @@ void Rasteriser::rasterise(buffer<float>& output_fragments, float* vertex_0, flo
 
 			storage_fragments.push_back(position.x);
 			storage_fragments.push_back(position.y);
-			for (int j = 2; j < m_fragment_size; j++)
-				storage_fragments.push_back(0);
 			position.y += 1;
 		}
 	}
@@ -61,16 +60,17 @@ float* Rasteriser::getBottomRightVertex(Triangle triangle)
 
 void Rasteriser::fillTriangle(buffer<float>& output_fragments, buffer<float>& rightmost_fragments, Triangle triangle)
 {
-	for (int i = 0; i < rightmost_fragments.size(); i += m_fragment_size)
+	for (int i = 0; i < rightmost_fragments.size(); i += 2)
 	{
 		float x = rightmost_fragments[i + 0];
 		float y = rightmost_fragments[i + 1];
 		while (triangle.isContained(x, y))
 		{
+			int index = rand() % 3;
 			output_fragments.push_back(x);
 			output_fragments.push_back(y);
 			for (int j = 2; j < m_fragment_size; j++)
-				output_fragments.push_back(rightmost_fragments[i + j]);
+				output_fragments.push_back(triangle.vertex[index][j]);
 			x -= 1;
 		}
 	}

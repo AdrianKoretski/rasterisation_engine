@@ -14,7 +14,6 @@ class Pipeline
 public:
 	Pipeline(unsigned int image_buffer_wigth, unsigned int image_buffer_height);
 	void renderObject(buffer<float>& VBO, buffer<unsigned int>& VAO);
-	void setVertexSize(unsigned int vertex_size);
 private:
 
 	void setPixel(float* pixel_data);
@@ -29,7 +28,7 @@ private:
 	buffer<FragmentShader> m_fragment_shader;
 	buffer<PerSampleProcessor> m_per_sample_processor;
 
-	unsigned int m_vertex_size = 4;
+	unsigned int m_vertex_size;
 	unsigned int m_image_buffer_width;
 	unsigned int m_image_buffer_height;
 	buffer<float*> m_image_buffer;

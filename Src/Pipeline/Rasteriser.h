@@ -52,7 +52,7 @@ public:
 	Rasteriser(unsigned int width_resolution, unsigned int height_resolution);
 	void rasterise(buffer<float>& output_fragments, float* vertex_0, float* vertex_1, float* vertex_2);
 private:
-	unsigned int m_fragment_size = 4;
+	unsigned int m_fragment_size = 7;
 	bool isCCW(float* vertex_0, float* vertex_1, float* vertex_2);
 	float* getBottomRightVertex(Triangle triangle);
 

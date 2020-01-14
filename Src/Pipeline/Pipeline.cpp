@@ -48,6 +48,7 @@ void Pipeline::processVertices(buffer<float>& output_VBO, buffer<unsigned int>& 
 	buffer<float> perspective_VBO;
 	m_vertex_shader[0].processVertices(perspective_VBO, input_VBO);
 	m_vertex_post_processor[0].postProcessVertices(output_VBO, output_VAO, perspective_VBO, input_VAO);
+	m_vertex_size = m_vertex_post_processor[0].getOutputVertexSize();
 }
 
 void Pipeline::processTriangle(buffer<float>& output_fragments, float* vertex_0, float* vertex_1, float* vertex_2)

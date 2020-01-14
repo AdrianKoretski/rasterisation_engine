@@ -11,5 +11,7 @@ public:
 	v3f color;
 private:
 	void shadeFragment(buffer<float>& output_fragment, float* inupt_fragment);
+	unsigned int m_input_vertex_size = 7;
+	unsigned int m_output_vertex_size;
 };
 
