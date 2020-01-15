@@ -15,7 +15,7 @@ struct vert
 
 int main()
 {
-	Pipeline pipeline(2000, 2000);
+	Pipeline pipeline(201, 201);
 
 	buffer<float> VBO;
 	buffer<uint> VAO;
@@ -48,6 +48,16 @@ int main()
 
 	for (int i = 0; i < 12; i++)
 		vertices[i].color = v3f((i >> 2) % 2, (i >> 1) % 2, i % 2);
+
+	vertices[0].color = v3f(1, 1, 1);
+	vertices[1].color = v3f(1, 0, 0);
+	vertices[2].color = v3f(1, 1, 1);
+	vertices[3].color = v3f(0, 1, 0);
+	vertices[4].color = v3f(1, 1, 1);
+	vertices[5].color = v3f(0, 0, 1);
+	vertices[6].color = v3f(1, 1, 1);
+	vertices[7].color = v3f(1, 1, 0);
+
 
 	pipeline.renderObject(VBO, VAO);
 }

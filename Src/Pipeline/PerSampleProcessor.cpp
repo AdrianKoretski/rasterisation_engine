@@ -20,7 +20,7 @@ void PerSampleProcessor::postProcessFragment(buffer<float>& output_fragment, flo
 {
 	uint x = uint(floor(input_fragment[0]));
 	uint y = uint(floor(input_fragment[1]));
-	if (input_fragment[2] > m_depth_buffer[x + y * m_depth_buffer_width])
+	if (input_fragment[2] >= m_depth_buffer[x + y * m_depth_buffer_width])
 		return;
 	m_depth_buffer[x + y * m_depth_buffer_width] = input_fragment[2];
 	for (uint i = 0; i < m_input_fragment_size; i++)

@@ -18,7 +18,9 @@ void Rasteriser::rasterise(buffer<float>& output_fragments, float* vertex_0, flo
 
 	for (int i = 0; i < 3; i++)
 	{
-		float* current_vertex = triangle.vertex[i];
+		float* current_vertex = triangle.getVertex(i);
+		if (triangle.getLine(i)[1] < 0 || (triangle.getLine(i)[1] == 0 && triangle.getLine(i)[0] < 0))
+			continue;
 		v2f position(ceil(current_vertex[0]) + 0.5f, floor(current_vertex[1]) + 0.5f);
 
 		while (position.y <= triangle.getNext(current_vertex)[1])
@@ -48,13 +50,13 @@ bool Rasteriser::isCCW(float* vertex_0, float* vertex_1, float* vertex_2)
 
 float* Rasteriser::getBottomRightVertex(Triangle triangle)
 {
-	float* bottom_right = triangle.vertex[0];
-	if (bottom_right[1] > triangle.vertex[1][1]
-		|| (bottom_right[1] == triangle.vertex[1][1] && bottom_right[0] < triangle.vertex[1][0]))
-		bottom_right = triangle.vertex[1];
-	if (bottom_right[1] > triangle.vertex[2][1]
-		|| (bottom_right[1] == triangle.vertex[2][1] && bottom_right[0] < triangle.vertex[2][0]))
-		bottom_right = triangle.vertex[2];
+	float* bottom_right = triangle.getVertex(0);
+	if (bottom_right[1] > triangle.getVertex(1)[1]
+		|| (bottom_right[1] == triangle.getVertex(1)[1] && bottom_right[0] < triangle.getVertex(1)[0]))
+		bottom_right = triangle.getVertex(1);
+	if (bottom_right[1] > triangle.getVertex(2)[1]
+		|| (bottom_right[1] == triangle.getVertex(2)[1] && bottom_right[0] < triangle.getVertex(2)[0]))
+		bottom_right = triangle.getVertex(2);
 	return bottom_right;
 }
 
@@ -69,16 +71,8 @@ void Rasteriser::fillTriangle(buffer<float>& output_fragments, buffer<float>& ri
 			int index = rand() % 3;
 			output_fragments.push_back(x);
 			output_fragments.push_back(y);
-			float* d = new float[4];
-			for (int k = 0; k < 3; k++)
-				d[k] = (x - triangle.vertex[k][0]) * (x - triangle.vertex[k][0]) + (y - triangle.vertex[k][1]) * (y - triangle.vertex[k][1]);
-			d[3] = d[0] + d[1] + d[2];
-			for (int k = 0; k < 3; k++)
-				d[k] = d[k] / d[3];
 			for (uint j = 2; j < m_fragment_size; j++)
-			{
-				output_fragments.push_back((triangle.vertex[0][j] * d[0] + triangle.vertex[1][j] * d[1] + triangle.vertex[2][j] * d[2]));
-			}
+				output_fragments.push_back(triangle.interpolate(x, y, j));
 			x -= 1;
 		}
 	}
