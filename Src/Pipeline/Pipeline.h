@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "..//Definitions.h"
+#include "..//Scene/Camera.h"
 #include "VertexShader.h"
 #include "VertexPostProcessor.h"
 #include "Rasterisation/Rasteriser.h"
@@ -12,7 +13,7 @@
 class Pipeline
 {
 public:
-	Pipeline(uint image_buffer_wigth, uint image_buffer_height);
+	Pipeline(uint image_buffer_wigth, uint image_buffer_height, Camera* camera);
 	void renderObject(buffer<float>& VBO, buffer<uint>& VAO);
 private:
 
@@ -32,4 +33,6 @@ private:
 	uint m_image_buffer_width;
 	uint m_image_buffer_height;
 	buffer<float*> m_image_buffer;
+
+	Camera* m_camera;
 };

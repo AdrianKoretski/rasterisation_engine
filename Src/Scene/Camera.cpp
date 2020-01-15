@@ -50,5 +50,11 @@ void Camera::setNearFarPlanes(float near, float far)
 
 m4f Camera::getViewPerspectiveMatrix()
 {
+	return m4f(
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1
+		);
 	return m_view_matrix * m_perspective_matrix;
 }

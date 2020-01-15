@@ -1,7 +1,10 @@
 #include <iostream>
 #include <random>
+#include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
 #include "Definitions.h"
 #include "Pipeline/Pipeline.h"
+#include "Scene/Camera.h"
 
 struct vert
 {
@@ -15,7 +18,20 @@ struct vert
 
 int main()
 {
-	Pipeline pipeline(201, 201);
+	m4f matrix = { 1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6 };
+	float* fmat = (float*)&matrix;
+	float* tst = new float[16];
+
+	for (int i = 0; i < 16; i++)
+		tst[i] = -1 - i;
+
+	
+
+	/*for (int i = 0; i < 16; i++)
+		std::cout << fmat[i] << std::endl;*/
+
+	Camera* camera = new Camera();
+	Pipeline pipeline(201, 201, camera);
 
 	buffer<float> VBO;
 	buffer<uint> VAO;

@@ -1,7 +1,7 @@
 #include "Pipeline.h"
 #include "../Utilities.h"
 
-Pipeline::Pipeline(uint image_buffer_width, uint image_buffer_height)
+Pipeline::Pipeline(uint image_buffer_width, uint image_buffer_height, Camera* camera)
 {
 	m_image_buffer_width = image_buffer_width;
 	m_image_buffer_height = image_buffer_height;
@@ -20,6 +20,8 @@ Pipeline::Pipeline(uint image_buffer_width, uint image_buffer_height)
 		m_image_buffer[i][1] = 0;
 		m_image_buffer[i][2] = 0;
 	}
+	m_camera = camera;
+	m_vertex_shader[0].addUniform((float*)(&camera->getViewPerspectiveMatrix()), 16);
 }
 
 void Pipeline::renderObject(buffer<float>& VBO, buffer<uint>& VAO)
