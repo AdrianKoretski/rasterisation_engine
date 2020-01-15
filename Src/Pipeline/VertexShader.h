@@ -10,8 +10,8 @@ public:
 private:
 	void shadeVertex(float* output, float* input);
 
-	unsigned int m_input_vertex_size = 7;
-	unsigned int m_output_vertex_size = 7;
+	uint m_input_vertex_size = 7;
+	uint m_output_vertex_size = 7;
 	float* m_output_vertex;
 };
 

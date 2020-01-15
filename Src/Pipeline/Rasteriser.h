@@ -38,7 +38,7 @@ struct Triangle
 				return false;
 		return true;
 	}
-	bool isOnCorrectSide(float x, float y, unsigned int index)
+	bool isOnCorrectSide(float x, float y, uint index)
 	{
 		v2f vect(x - vertex[index][0], y - vertex[index][1]);
 
@@ -49,16 +49,16 @@ struct Triangle
 class Rasteriser
 {
 public:
-	Rasteriser(unsigned int width_resolution, unsigned int height_resolution);
+	Rasteriser(uint width_resolution, uint height_resolution);
 	void rasterise(buffer<float>& output_fragments, float* vertex_0, float* vertex_1, float* vertex_2);
 private:
-	unsigned int m_fragment_size = 7;
+	uint m_fragment_size = 7;
 	bool isCCW(float* vertex_0, float* vertex_1, float* vertex_2);
 	float* getBottomRightVertex(Triangle triangle);
 
 	void fillTriangle(buffer<float>& output_fragments, buffer<float>& rightmost_fragments, Triangle triangle);
 
-	unsigned int m_width_resolution;
-	unsigned int m_height_resolution;
+	uint m_width_resolution;
+	uint m_height_resolution;
 };
 

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <random>
 
-Rasteriser::Rasteriser(unsigned int width_resolution, unsigned int height_resolution)
+Rasteriser::Rasteriser(uint width_resolution, uint height_resolution)
 {
 	m_width_resolution = width_resolution;
 	m_height_resolution = height_resolution;
@@ -60,7 +60,7 @@ float* Rasteriser::getBottomRightVertex(Triangle triangle)
 
 void Rasteriser::fillTriangle(buffer<float>& output_fragments, buffer<float>& rightmost_fragments, Triangle triangle)
 {
-	for (int i = 0; i < rightmost_fragments.size(); i += 2)
+	for (uint i = 0; i < rightmost_fragments.size(); i += 2)
 	{
 		float x = rightmost_fragments[i + 0];
 		float y = rightmost_fragments[i + 1];
@@ -75,7 +75,7 @@ void Rasteriser::fillTriangle(buffer<float>& output_fragments, buffer<float>& ri
 			d[3] = d[0] + d[1] + d[2];
 			for (int k = 0; k < 3; k++)
 				d[k] = d[k] / d[3];
-			for (int j = 2; j < m_fragment_size; j++)
+			for (uint j = 2; j < m_fragment_size; j++)
 			{
 				output_fragments.push_back((triangle.vertex[0][j] * d[0] + triangle.vertex[1][j] * d[1] + triangle.vertex[2][j] * d[2]));
 			}

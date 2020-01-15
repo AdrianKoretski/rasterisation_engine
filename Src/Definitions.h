@@ -11,3 +11,5 @@
 #define m4f glm::mat4
 
 #define buffer std::vector
+
+#define uint unsigned int
