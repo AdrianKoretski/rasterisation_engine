@@ -69,8 +69,16 @@ void Rasteriser::fillTriangle(buffer<float>& output_fragments, buffer<float>& ri
 			int index = rand() % 3;
 			output_fragments.push_back(x);
 			output_fragments.push_back(y);
+			float* d = new float[4];
+			for (int k = 0; k < 3; k++)
+				d[k] = (x - triangle.vertex[k][0]) * (x - triangle.vertex[k][0]) + (y - triangle.vertex[k][1]) * (y - triangle.vertex[k][1]);
+			d[3] = d[0] + d[1] + d[2];
+			for (int k = 0; k < 3; k++)
+				d[k] = d[k] / d[3];
 			for (int j = 2; j < m_fragment_size; j++)
-				output_fragments.push_back((triangle.vertex[0][j]+ triangle.vertex[1][j]+ triangle.vertex[2][j])/3);
+			{
+				output_fragments.push_back((triangle.vertex[0][j] * d[0] + triangle.vertex[1][j] * d[1] + triangle.vertex[2][j] * d[2]));
+			}
 			x -= 1;
 		}
 	}

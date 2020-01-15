@@ -10,7 +10,7 @@ Pipeline::Pipeline(unsigned int image_buffer_width, unsigned int image_buffer_he
 	m_vertex_post_processor.push_back(*new VertexPostProcessor(image_buffer_width, image_buffer_height));
 	m_rasteriser.push_back(*new Rasteriser(image_buffer_width, image_buffer_height));
 	m_fragment_shader.push_back(*new FragmentShader());
-	m_per_sample_processor.push_back(*new PerSampleProcessor());
+	m_per_sample_processor.push_back(*new PerSampleProcessor(image_buffer_width, image_buffer_height));
 
 	m_image_buffer.resize(m_image_buffer_width * m_image_buffer_height);
 	for (int i = 0; i < m_image_buffer_width * m_image_buffer_height; i++)
@@ -56,7 +56,6 @@ void Pipeline::processVertices(buffer<float>& output_VBO, buffer<unsigned int>& 
 
 void Pipeline::processTriangle(buffer<float>& output_fragments, float* vertex_0, float* vertex_1, float* vertex_2)
 {
-	m_fragment_shader[0].setColor();
 	buffer<float> fragments;
 
 	m_rasteriser[0].rasterise(fragments, vertex_0, vertex_1, vertex_2);
