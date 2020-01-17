@@ -13,3 +13,5 @@
 #define buffer std::vector
 
 #define uint unsigned int
+
+#define PI 3.1415926535897
