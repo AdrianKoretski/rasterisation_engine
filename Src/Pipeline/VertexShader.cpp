@@ -33,6 +33,13 @@ void VertexShader::shadeVertex(float* output, float* input)
 
 	v4f out = persp * in;
 
+	out.x /= out.w;
+	out.y /= out.w;
+	out.z /= out.w;
+	out.w = 1/out.w;
+
+	std::cout << out.x << " " << out.y << " " << out.z << " " << out.w << std::endl;
+
 	for (int i = 0; i < 4; i++)
 		output[i] = out[i];
 	for (uint i = 4; i < m_output_vertex_size; i++)

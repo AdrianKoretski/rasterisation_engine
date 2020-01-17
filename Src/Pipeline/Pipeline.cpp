@@ -30,7 +30,6 @@ void Pipeline::renderObject(buffer<float>& VBO, buffer<uint>& VAO)
 	buffer<uint> processed_VAO;
 
 	processVertices(processed_VBO, processed_VAO, VBO, VAO);
-
 	for (uint i = 0; i < processed_VAO.size(); i += 3)
 		renderTriangle(processed_VBO, &processed_VAO[i]);
 	saveEXR(m_image_buffer, "test.exr", m_image_buffer_width, m_image_buffer_height);
@@ -59,7 +58,6 @@ void Pipeline::processVertices(buffer<float>& output_VBO, buffer<uint>& output_V
 void Pipeline::processTriangle(buffer<float>& output_fragments, float* vertex_0, float* vertex_1, float* vertex_2)
 {
 	buffer<float> fragments;
-
 	m_rasteriser[0].rasterise(fragments, vertex_0, vertex_1, vertex_2);
 	m_fragment_shader[0].shadeFragments(output_fragments, fragments);
 }
@@ -68,7 +66,6 @@ void Pipeline::renderTriangle(buffer<float>& input_VBO, uint* input_VAO)
 {
 	buffer<float> shaded_fragments;
 	buffer<float> post_processed_fragments;
-
 	processTriangle(shaded_fragments, 
 		&input_VBO[m_vertex_size * input_VAO[0]],
 		&input_VBO[m_vertex_size * input_VAO[1]],

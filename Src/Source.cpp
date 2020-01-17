@@ -31,22 +31,30 @@ int main()
 		std::cout << fmat[i] << std::endl;*/
 
 	Camera* camera = new Camera();
-	Pipeline pipeline(201, 201, camera);
+	camera->setCamera(v3f(0, 0, 2), v3f(0, 0, -1), v3f(0, 1, 0));
+	Pipeline pipeline(320, 180, camera);
 
 	buffer<float> VBO;
 	buffer<uint> VAO;
-	VBO.resize(12 * 7);
+	VBO.resize(3 * 7);
 	vert* vertices = (vert*)VBO.data();
-	vertices[0] = vert( 0.5f, 0.5f, 0.5f, 1);
+	vertices[0] = vert(0.5f, 0.5f, -0.5f, 1);
+	vertices[1] = vert(-0.5f, 0.5f, -0.5f, 1);
+	vertices[2] = vert(-0.5f, -0.5f, -1.5f, 1);
+	/*vertices[0] = vert( 0.5f, 0.5f, 0.5f, 1);
 	vertices[1] = vert( 0.5f, 0.5f,-0.5f, 1);
 	vertices[2] = vert( 0.5f,-0.5f, 0.5f, 1);
 	vertices[3] = vert( 0.5f,-0.5f,-0.5f, 1);
 	vertices[4] = vert(-0.5f, 0.5f, 0.5f, 1);
 	vertices[5] = vert(-0.5f, 0.5f, -0.5f, 1);
 	vertices[6] = vert(-0.5f, -0.5f, 0.5f, 1);
-	vertices[7] = vert(-0.5f, -0.5f, -0.5f, 1);
+	vertices[7] = vert(-0.5f, -0.5f, -0.5f, 1);*/
 
 	VAO.push_back(0);
+	VAO.push_back(1);
+	VAO.push_back(2);
+
+	/*VAO.push_back(0);
 	VAO.push_back(4);
 	VAO.push_back(7);
 
@@ -60,20 +68,20 @@ int main()
 	
 	VAO.push_back(2);
 	VAO.push_back(0);
-	VAO.push_back(5);
+	VAO.push_back(5);*/
 
-	for (int i = 0; i < 12; i++)
-		vertices[i].color = v3f((i >> 2) % 2, (i >> 1) % 2, i % 2);
 
-	vertices[0].color = v3f(1, 1, 1);
-	vertices[1].color = v3f(1, 0, 0);
-	vertices[2].color = v3f(1, 1, 1);
-	vertices[3].color = v3f(0, 1, 0);
+	vertices[0].color = v3f(1, 0, 0);
+	vertices[1].color = v3f(0, 1, 0);
+	vertices[2].color = v3f(0, 0, 1);
+	/*vertices[3].color = v3f(0, 1, 0);
 	vertices[4].color = v3f(1, 1, 1);
 	vertices[5].color = v3f(0, 0, 1);
 	vertices[6].color = v3f(1, 1, 1);
 	vertices[7].color = v3f(1, 1, 0);
 
+	for (int i = 0; i < 8; i++)
+		vertices[i].color = v3f(1) - vertices[i].color;*/
 
 	pipeline.renderObject(VBO, VAO);
 }
