@@ -10,7 +10,7 @@ Camera::Camera()
 	);
 
 	m_perspective_matrix = m4f(
-		-1, 0, 0, 0,
+		-9.f/16, 0, 0, 0,
 		0, -1, 0, 0,
 		0, 0, 0, 1,
 		0, 0, 1, 0

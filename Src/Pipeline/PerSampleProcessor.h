@@ -7,6 +7,7 @@ class PerSampleProcessor
 public:
 	PerSampleProcessor(uint depth_buffer_width, uint depth_buffer_height);
 	void postProcessFragments(buffer<float>& output_fragment, buffer<float>& input_fragment);
+	void clearBuffer();
 private:
 	void postProcessFragment(buffer<float>& output_fragment, float* input_fragment);
 	uint m_input_fragment_size = 7;

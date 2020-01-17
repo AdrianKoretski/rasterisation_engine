@@ -19,7 +19,7 @@ void Rasteriser::rasterise(buffer<float>& output_fragments, float* vertex_0, flo
 	for (int i = 0; i < 3; i++)
 	{
 		float* current_vertex = triangle.getVertex(i);
-		if (triangle.getLine(i)[1] < 0 || (triangle.getLine(i)[1] == 0 && triangle.getLine(i)[0] < 0))
+		if (triangle.getLine(i)[1] < 0 || (triangle.getLine(i)[1] == 0 && triangle.getLine(i)[0] > 0))
 			continue;
 		v2f position(ceil(current_vertex[0]) + 0.5f, floor(current_vertex[1]) + 0.5f);
 
@@ -46,18 +46,6 @@ bool Rasteriser::isCCW(float* vertex_0, float* vertex_1, float* vertex_2)
 	if (glm::cross(v1, v2).z <= 0)
 		return false;
 	return true;
-}
-
-float* Rasteriser::getBottomRightVertex(Triangle triangle)
-{
-	float* bottom_right = triangle.getVertex(0);
-	if (bottom_right[1] > triangle.getVertex(1)[1]
-		|| (bottom_right[1] == triangle.getVertex(1)[1] && bottom_right[0] < triangle.getVertex(1)[0]))
-		bottom_right = triangle.getVertex(1);
-	if (bottom_right[1] > triangle.getVertex(2)[1]
-		|| (bottom_right[1] == triangle.getVertex(2)[1] && bottom_right[0] < triangle.getVertex(2)[0]))
-		bottom_right = triangle.getVertex(2);
-	return bottom_right;
 }
 
 void Rasteriser::fillTriangle(buffer<float>& output_fragments, buffer<float>& rightmost_fragments, Triangle triangle)

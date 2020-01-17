@@ -21,17 +21,29 @@ Pipeline::Pipeline(uint image_buffer_width, uint image_buffer_height, Camera* ca
 		m_image_buffer[i][2] = 0;
 	}
 	m_camera = camera;
-	m_vertex_shader[0].addUniform((float*)(&camera->getViewPerspectiveMatrix()), 16);
+	m_vertex_shader[0].addUniform((float*)(&m_camera->getViewPerspectiveMatrix()), 16);
 }
 
 void Pipeline::renderObject(buffer<float>& VBO, buffer<uint>& VAO)
 {
+	m_vertex_shader[0].setUniform((float*)(&m_camera->getViewPerspectiveMatrix()), 16, 0);
 	buffer<float> processed_VBO;
 	buffer<uint> processed_VAO;
 
 	processVertices(processed_VBO, processed_VAO, VBO, VAO);
 	for (uint i = 0; i < processed_VAO.size(); i += 3)
 		renderTriangle(processed_VBO, &processed_VAO[i]);
+}
+
+void Pipeline::clearBuffers()
+{
+	for (uint i = 0; i < m_image_buffer_width * m_image_buffer_height; i++)
+	{
+		m_image_buffer[i][0] = 0;
+		m_image_buffer[i][1] = 0;
+		m_image_buffer[i][2] = 0;
+	}
+	m_per_sample_processor[0].clearBuffer();
 }
 
 void Pipeline::saveRender(std::string file_name)

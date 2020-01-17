@@ -16,10 +16,18 @@ void PerSampleProcessor::postProcessFragments(buffer<float>& output_fragment, bu
 		postProcessFragment(output_fragment, &input_fragment[i]);
 }
 
+void PerSampleProcessor::clearBuffer()
+{
+	for (uint i = 0; i < m_depth_buffer_width * m_depth_buffer_height; i++)
+		m_depth_buffer[i] = std::numeric_limits<float>::infinity();
+}
+
 void PerSampleProcessor::postProcessFragment(buffer<float>& output_fragment, float* input_fragment)
 {
 	uint x = uint(floor(input_fragment[0]));
 	uint y = uint(floor(input_fragment[1]));
+	if (x >= m_depth_buffer_width || x < 0 || y >= m_depth_buffer_height || y < 0)
+		return;
 	if (input_fragment[2] >= m_depth_buffer[x + y * m_depth_buffer_width])
 		return;
 	m_depth_buffer[x + y * m_depth_buffer_width] = input_fragment[2];

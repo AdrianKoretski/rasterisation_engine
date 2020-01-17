@@ -46,12 +46,13 @@ bool Triangle::isOnCorrectSide(float x, float y, uint index)
 
 float Triangle::interpolate(float x, float y, uint index)
 {
-	v2f* lines = new v2f[3];
 	float* weights = new float[3];
 	for (int i = 0; i < 3; i++)
 		weights[(i + 2) % 3] = cross(v2f(m_vertex[i][0] - x, m_vertex[i][1] - y), m_lines[i]);
 	float triangle_area = cross(m_lines[0], m_lines[1]);
-	return (weights[0] * m_vertex[0][index] + weights[1] * m_vertex[1][index] + weights[2] * m_vertex[2][index]) / triangle_area;
+	float value = (weights[0] * m_vertex[0][index] + weights[1] * m_vertex[1][index] + weights[2] * m_vertex[2][index]) / triangle_area;
+	delete (weights);
+	return value;
 }
 
 v2f Triangle::getLine(uint index)

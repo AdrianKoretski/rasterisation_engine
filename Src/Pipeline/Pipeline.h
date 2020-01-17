@@ -16,6 +16,7 @@ public:
 	Pipeline(uint image_buffer_wigth, uint image_buffer_height, Camera* camera);
 	void renderObject(buffer<float>& VBO, buffer<uint>& VAO);
 	void saveRender(std::string file_name);
+	void clearBuffers();
 private:
 
 	void setPixel(float* pixel_data);
@@ -34,6 +35,6 @@ private:
 	uint m_image_buffer_width;
 	uint m_image_buffer_height;
 	buffer<float*> m_image_buffer;
-
+	uint t = 0;
 	Camera* m_camera;
 };

@@ -12,9 +12,6 @@ void VertexPostProcessor::postProcessVertices(
 	buffer<float>& output_VBO, buffer<uint>& output_VAO,
 	buffer<float>& input_VBO, buffer<uint>& input_VAO)
 {
-	float* output_float = new float;
-	int* output_int = new int;
-
 	for (uint i = 0; i < input_VBO.size(); i += m_output_vertex_size)
 	{
 		output_VBO.push_back((input_VBO[i+0] + 1) * m_width_resolution / 2);

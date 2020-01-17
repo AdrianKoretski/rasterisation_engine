@@ -14,7 +14,6 @@ public:
 private:
 	uint m_fragment_size = 7;
 	bool isCCW(float* vertex_0, float* vertex_1, float* vertex_2);
-	float* getBottomRightVertex(Triangle triangle);
 
 	void fillTriangle(buffer<float>& output_fragments, buffer<float>& rightmost_fragments, Triangle triangle);
 
