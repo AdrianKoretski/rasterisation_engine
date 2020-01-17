@@ -32,7 +32,11 @@ void Pipeline::renderObject(buffer<float>& VBO, buffer<uint>& VAO)
 	processVertices(processed_VBO, processed_VAO, VBO, VAO);
 	for (uint i = 0; i < processed_VAO.size(); i += 3)
 		renderTriangle(processed_VBO, &processed_VAO[i]);
-	saveEXR(m_image_buffer, "test.exr", m_image_buffer_width, m_image_buffer_height);
+}
+
+void Pipeline::saveRender(std::string file_name)
+{
+	saveEXR(m_image_buffer, file_name + ".exr", m_image_buffer_width, m_image_buffer_height);
 }
 
 void Pipeline::setPixel(float* pixel_data)

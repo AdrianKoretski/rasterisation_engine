@@ -40,7 +40,7 @@ int main()
 	vert* vertices = (vert*)VBO.data();
 	vertices[0] = vert(0.5f, 0.5f, -0.5f, 1);
 	vertices[1] = vert(-0.5f, 0.5f, -0.5f, 1);
-	vertices[2] = vert(-0.5f, -0.5f, -1.5f, 1);
+	vertices[2] = vert(-0.5f, -0.5f, -1.f, 1);
 	/*vertices[0] = vert( 0.5f, 0.5f, 0.5f, 1);
 	vertices[1] = vert( 0.5f, 0.5f,-0.5f, 1);
 	vertices[2] = vert( 0.5f,-0.5f, 0.5f, 1);
@@ -84,4 +84,5 @@ int main()
 		vertices[i].color = v3f(1) - vertices[i].color;*/
 
 	pipeline.renderObject(VBO, VAO);
+	pipeline.saveRender("test");
 }

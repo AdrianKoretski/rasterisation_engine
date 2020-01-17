@@ -15,6 +15,7 @@ class Pipeline
 public:
 	Pipeline(uint image_buffer_wigth, uint image_buffer_height, Camera* camera);
 	void renderObject(buffer<float>& VBO, buffer<uint>& VAO);
+	void saveRender(std::string file_name);
 private:
 
 	void setPixel(float* pixel_data);
