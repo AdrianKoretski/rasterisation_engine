@@ -9,7 +9,7 @@ public:
 
 	void setCamera(v3f position, v3f forward, v3f up);
 	void setPerspective(float field_of_view, float aspect_ratio);
-	void setFrustum(float field_of_view, float aspect_ratio);
+	void setFrustum(float left, float right, float top, float bottom);
 	void setNearFarPlanes(float near, float far);
 
 	m4f getViewPerspectiveMatrix();

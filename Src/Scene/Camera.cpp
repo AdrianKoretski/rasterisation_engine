@@ -7,6 +7,14 @@ Camera::Camera()
 	setPerspectiveMatrix();
 }
 
+void Camera::setFrustum(float left, float right, float top, float bottom)
+{
+	m_left = left;
+	m_right = right;
+	m_bottom = bottom;
+	m_top = top;
+}
+
 void Camera::setCamera(v3f position, v3f forward, v3f up)
 {
 	m_forward = -glm::normalize(forward);
