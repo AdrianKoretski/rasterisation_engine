@@ -13,6 +13,7 @@ void Camera::setFrustum(float left, float right, float top, float bottom)
 	m_right = right;
 	m_bottom = bottom;
 	m_top = top;
+	setPerspectiveMatrix();
 }
 
 void Camera::setCamera(v3f position, v3f forward, v3f up)
