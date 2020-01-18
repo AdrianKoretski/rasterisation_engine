@@ -3,47 +3,34 @@
 
 Camera::Camera()
 {
-	m_view_matrix = m4f(
-		1, 0, 0, 0,
-		0, 1, 0, 0,
-		0, 0, -1, 0,
-		0, 0, 0, 1
-	);
-
-	m_perspective_matrix = glm::transpose(m4f(
-		-1, 0, 0, 0,
-		0, -1, 0, 0,
-		0, 0, -3, -4,
-		0, 0, 1, 0
-	));
+	setCamera(v3f(0), v3f(0, 0, -1), v3f(0, 1, 0));
 	setPerspectiveMatrix();
 }
 
 void Camera::setCamera(v3f position, v3f forward, v3f up)
 {
-	v3f z = -glm::normalize(forward);
-	v3f x = glm::normalize(glm::cross(up, z));
-	v3f y = glm::normalize(glm::cross(z, x));
-	v3f p = position;
+	m_forward = -glm::normalize(forward);
+	m_side = glm::normalize(glm::cross(up, m_forward));
+	m_up = glm::normalize(glm::cross(m_forward, m_side));
+	m_position = position;
 
 	m_view_matrix = m4f(
-		x[0], y[0], z[0], p[0],
-		x[1], y[1], z[1], p[1],
-		x[2], y[2], z[2], p[2],
+		m_side[0], m_up[0], m_forward[0], m_position[0],
+		m_side[1], m_up[1], m_forward[1], m_position[1],
+		m_side[2], m_up[2], m_forward[2], m_position[2],
 		0, 0, 0, 1
 	);
 
 	m_view_matrix = glm::inverse(glm::transpose(m_view_matrix));
 }
 
-void Camera::setAspectRatio(float aspect_ratio)
+void Camera::setPerspective(float field_of_view, float aspect_ratio)
 {
-	m_aspect_ratio = aspect_ratio;
-}
-
-void Camera::setFieldOfView(float field_of_view)
-{
-	m_field_of_view = field_of_view;
+	m_left = m_near_plane * tan(field_of_view * PI / 360);
+	m_right = -m_left;
+	m_top = m_right / aspect_ratio;
+	m_bottom = -m_top;
+	setPerspectiveMatrix();
 }
 
 void Camera::setNearFarPlanes(float near, float far)
@@ -60,12 +47,10 @@ m4f Camera::getViewPerspectiveMatrix()
 
 void Camera::setPerspectiveMatrix()
 {
-	float left_right = m_near_plane * tan(m_field_of_view * PI / 360);
-	float top_bottom = left_right / m_aspect_ratio;
 	m_perspective_matrix = glm::transpose(m4f(
-		m_near_plane / left_right, 0, 0, 0,
-		0, m_near_plane / top_bottom, 0, 0,
-		0, 0, (m_far_plane + m_near_plane) / (m_near_plane - m_far_plane), 2 * m_far_plane * m_near_plane / (m_far_plane - m_near_plane),
+		2 * m_near_plane / (m_right - m_left), 0, (m_left + m_right)/(m_left - m_right), 0,
+		0, 2 * m_near_plane / (m_top - m_bottom), (m_bottom + m_top)/(m_bottom - m_top), 0,
+		0, 0, (m_far_plane + m_near_plane)/(m_near_plane - m_far_plane), 2 * m_far_plane * m_near_plane / (m_far_plane - m_near_plane),
 		0, 0, 1, 0
 	));
 }

@@ -19,7 +19,7 @@ void Rasteriser::rasterise(buffer<float>& output_fragments, float* vertex_0, flo
 	for (int i = 0; i < 3; i++)
 	{
 		float* current_vertex = triangle.getVertex(i);
-		if (triangle.getLine(i)[1] < 0 || (triangle.getLine(i)[1] == 0 && triangle.getLine(i)[0] > 0))
+		if (triangle.getLine(i)[1] <= 0)
 			continue;
 		v2f position(ceil(current_vertex[0]) + 0.5f, floor(current_vertex[1]) + 0.5f);
 

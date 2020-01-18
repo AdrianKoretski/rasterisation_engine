@@ -20,6 +20,7 @@ struct vert
 int main()
 {
 	Camera* camera = &Camera();
+	camera->setPerspective(130, 16.f/9);
 	camera->setCamera(v3f(0, 0, 2), v3f(0, 0, -1), v3f(0, 1, 0));
 	Pipeline pipeline(1920, 1080, camera);
 
