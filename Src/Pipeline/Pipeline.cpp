@@ -6,7 +6,7 @@ Pipeline::Pipeline(uint image_buffer_width, uint image_buffer_height, Camera* ca
 	m_image_buffer_width = image_buffer_width;
 	m_image_buffer_height = image_buffer_height;
 
-	m_vertex_shader.push_back(*new VertexShader());
+	m_vertex_shader.push_back(new TestVertexShader());
 	m_vertex_post_processor.push_back(*new VertexPostProcessor(image_buffer_width, image_buffer_height));
 	m_rasteriser.push_back(*new Rasteriser(image_buffer_width, image_buffer_height));
 	m_fragment_shader.push_back(*new FragmentShader());
@@ -21,12 +21,12 @@ Pipeline::Pipeline(uint image_buffer_width, uint image_buffer_height, Camera* ca
 		m_image_buffer[i][2] = 0;
 	}
 	m_camera = camera;
-	m_vertex_shader[0].addUniform((float*)(&m_camera->getViewPerspectiveMatrix()), 16);
+	m_vertex_shader[0]->setUniform((&m_camera->getViewPerspectiveMatrix()), 0);
 }
 
 void Pipeline::renderObject(buffer<float>& VBO, buffer<uint>& VAO)
 {
-	m_vertex_shader[0].setUniform((float*)(&m_camera->getViewPerspectiveMatrix()), 16, 0);
+	m_vertex_shader[0]->setUniform((&m_camera->getViewPerspectiveMatrix()), 0);
 	buffer<float> processed_VBO;
 	buffer<uint> processed_VAO;
 
@@ -66,7 +66,7 @@ void Pipeline::setPixel(float* pixel_data)
 void Pipeline::processVertices(buffer<float>& output_VBO, buffer<uint>& output_VAO, buffer<float>& input_VBO, buffer<uint>& input_VAO)
 {
 	buffer<float> perspective_VBO;
-	m_vertex_shader[0].processVertices(perspective_VBO, input_VBO);
+	m_vertex_shader[0]->processVertices(perspective_VBO, input_VBO);
 	m_vertex_post_processor[0].postProcessVertices(output_VBO, output_VAO, perspective_VBO, input_VAO);
 	m_vertex_size = m_vertex_post_processor[0].getOutputVertexSize();
 }

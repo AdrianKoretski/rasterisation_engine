@@ -80,7 +80,7 @@ int main()
 	{
 		camera->setCamera(v3f(2 * sin(angl), 0, 2 * cos(angl)), -v3f(sin(angl), 0, cos(angl)), v3f(0, 1, 0));
 		pipeline.renderObject(VBO, VAO);
-		pipeline.saveRender(std::to_string(angl));
+		pipeline.saveRender("folder/" + std::to_string(angl));
 		pipeline.clearBuffers();
 	}
 }
