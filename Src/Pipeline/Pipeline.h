@@ -9,6 +9,7 @@
 #include "VertexPostProcessor/VertexPostProcessor.h"
 #include "Rasterisation/Rasteriser.h"
 #include "FragmentShader/FragmentShader.h"
+#include "FragmentShader/TestFragmentShader.h"
 #include "PerSampleProcessor/PerSampleProcessor.h"
 
 class Pipeline
@@ -29,7 +30,7 @@ private:
 	buffer<VertexShader*> m_vertex_shader;
 	buffer<VertexPostProcessor> m_vertex_post_processor;
 	buffer<Rasteriser> m_rasteriser;
-	buffer<FragmentShader> m_fragment_shader;
+	buffer<FragmentShader*> m_fragment_shader;
 	buffer<PerSampleProcessor> m_per_sample_processor;
 
 	uint m_vertex_size;

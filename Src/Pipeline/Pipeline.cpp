@@ -9,7 +9,7 @@ Pipeline::Pipeline(uint image_buffer_width, uint image_buffer_height, Camera* ca
 	m_vertex_shader.push_back(new TestVertexShader());
 	m_vertex_post_processor.push_back(*new VertexPostProcessor(image_buffer_width, image_buffer_height));
 	m_rasteriser.push_back(*new Rasteriser(image_buffer_width, image_buffer_height));
-	m_fragment_shader.push_back(*new FragmentShader());
+	m_fragment_shader.push_back(new TestFragmentShader());
 	m_per_sample_processor.push_back(*new PerSampleProcessor(image_buffer_width, image_buffer_height));
 
 	m_image_buffer.resize(m_image_buffer_width * m_image_buffer_height);
@@ -75,7 +75,7 @@ void Pipeline::processTriangle(buffer<float>& output_fragments, float* vertex_0,
 {
 	buffer<float> fragments;
 	m_rasteriser[0].rasterise(fragments, vertex_0, vertex_1, vertex_2);
-	m_fragment_shader[0].shadeFragments(output_fragments, fragments);
+	m_fragment_shader[0]->shadeFragments(output_fragments, fragments);
 }
 
 void Pipeline::renderTriangle(buffer<float>& input_VBO, uint* input_VAO)

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "..//..//Definitions.h"
 #include "VertexShader.h"
 
 class TestVertexShader : public VertexShader
