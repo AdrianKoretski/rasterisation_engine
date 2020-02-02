@@ -1,11 +1,11 @@
 #pragma once
 
-#include "..//Definitions.h"
+#include "..//..//Definitions.h"
 
-class GeometryShader
+class VertexPostProcessor
 {
 public:
-	GeometryShader(uint width_resolution, uint height_resolution);
+	VertexPostProcessor(uint width_resolution, uint height_resolution);
 	void postProcessVertices(
 		buffer<float>& output_VBO, buffer<uint>& output_VAO, 
 		buffer<float>& input_VBO, buffer<uint>& input_VAO);

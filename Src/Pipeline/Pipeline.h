@@ -2,14 +2,14 @@
 
 #include <vector>
 
-#include "..//Definitions.h"
-#include "..//Scene/Camera.h"
-#include "TestVertexShader.h"
-#include "VertexShader.h"
-#include "VertexPostProcessor.h"
+#include "../Definitions.h"
+#include "../Scene/Camera.h"
+#include "VertexShader/VertexShader.h"
+#include "VertexShader/TestVertexShader.h"
+#include "VertexPostProcessor/VertexPostProcessor.h"
 #include "Rasterisation/Rasteriser.h"
-#include "FragmentShader.h"
-#include "PerSampleProcessor.h"
+#include "FragmentShader/FragmentShader.h"
+#include "PerSampleProcessor/PerSampleProcessor.h"
 
 class Pipeline
 {

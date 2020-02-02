@@ -1,5 +1,5 @@
 #include "TestVertexShader.h"
-#include "..//glm/gtc/type_ptr.hpp"
+#include "..//..//glm/gtc/type_ptr.hpp"
 #include <iostream>
 TestVertexShader::TestVertexShader()
 {

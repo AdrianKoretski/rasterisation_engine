@@ -1,5 +1,5 @@
 #include "VertexPostProcessor.h"
-#include "..//Definitions.h"
+#include "..//..//Definitions.h"
 
 VertexPostProcessor::VertexPostProcessor(uint width_resolution, uint height_resolution)
 {
@@ -7,7 +7,6 @@ VertexPostProcessor::VertexPostProcessor(uint width_resolution, uint height_reso
 	m_height_resolution = height_resolution;
 }
 
-// This is an example of simple vertex post processing. Ideally, this section would include triangle clipping and such.
 void VertexPostProcessor::postProcessVertices(
 	buffer<float>& output_VBO, buffer<uint>& output_VAO,
 	buffer<float>& input_VBO, buffer<uint>& input_VAO)
