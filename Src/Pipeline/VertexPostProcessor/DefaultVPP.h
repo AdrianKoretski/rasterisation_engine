@@ -6,8 +6,13 @@ class DefaultVPP : public VertexPostProcessor
 {
 public:
 	DefaultVPP();
+	void postProcessVertices(
+		buffer<float>& output_VBO, buffer<uint>& output_VAO,
+		buffer<float>& input_VBO, buffer<uint>& input_VAO);
 protected:
-	void shadeFragment(float* output_fragment, float* inupt_fragment);
-	void setIOFragmentSizes();
+	void setIOVertexSizes();
 	void setupUniforms();
+private:
+	uint* m_width_resolution;
+	uint* m_height_resolution;
 };

@@ -7,6 +7,7 @@
 #include "VertexShader/VertexShader.h"
 #include "VertexShader/TestVertexShader.h"
 #include "VertexPostProcessor/VertexPostProcessor.h"
+#include "VertexPostProcessor/DefaultVPP.h"
 #include "Rasterisation/Rasteriser.h"
 #include "FragmentShader/FragmentShader.h"
 #include "FragmentShader/TestFragmentShader.h"
@@ -28,7 +29,7 @@ private:
 	void processTriangle(buffer<float>& output_fragments, float* vertex_0, float* vertex_1, float* vertex_2);
 
 	buffer<VertexShader*> m_vertex_shader;
-	buffer<VertexPostProcessor> m_vertex_post_processor;
+	buffer<VertexPostProcessor*> m_vertex_post_processor;
 	buffer<Rasteriser> m_rasteriser;
 	buffer<FragmentShader*> m_fragment_shader;
 	buffer<PerSampleProcessor> m_per_sample_processor;

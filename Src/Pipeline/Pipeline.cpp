@@ -7,7 +7,9 @@ Pipeline::Pipeline(uint image_buffer_width, uint image_buffer_height, Camera* ca
 	m_image_buffer_height = image_buffer_height;
 
 	m_vertex_shader.push_back(new TestVertexShader());
-	m_vertex_post_processor.push_back(*new VertexPostProcessor(image_buffer_width, image_buffer_height));
+	m_vertex_post_processor.push_back(new DefaultVPP());
+	m_vertex_post_processor[0]->setUniform(&image_buffer_width, 0);
+	m_vertex_post_processor[0]->setUniform(&image_buffer_height, 1);
 	m_rasteriser.push_back(*new Rasteriser(image_buffer_width, image_buffer_height));
 	m_fragment_shader.push_back(new TestFragmentShader());
 	m_per_sample_processor.push_back(*new PerSampleProcessor(image_buffer_width, image_buffer_height));
@@ -67,8 +69,8 @@ void Pipeline::processVertices(buffer<float>& output_VBO, buffer<uint>& output_V
 {
 	buffer<float> perspective_VBO;
 	m_vertex_shader[0]->processVertices(perspective_VBO, input_VBO);
-	m_vertex_post_processor[0].postProcessVertices(output_VBO, output_VAO, perspective_VBO, input_VAO);
-	m_vertex_size = m_vertex_post_processor[0].getOutputVertexSize();
+	m_vertex_post_processor[0]->postProcessVertices(output_VBO, output_VAO, perspective_VBO, input_VAO);
+	m_vertex_size = m_vertex_post_processor[0]->getOutputVertexSize();
 }
 
 void Pipeline::processTriangle(buffer<float>& output_fragments, float* vertex_0, float* vertex_1, float* vertex_2)

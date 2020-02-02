@@ -1,19 +1,18 @@
 #pragma once
 
 #include "..//..//Definitions.h"
+#include "../Uniform.h"
 
-class VertexPostProcessor
+class VertexPostProcessor : public Uniform
 {
 public:
-	VertexPostProcessor(uint width_resolution, uint height_resolution);
-	void postProcessVertices(
+	VertexPostProcessor();
+	virtual void postProcessVertices(
 		buffer<float>& output_VBO, buffer<uint>& output_VAO, 
-		buffer<float>& input_VBO, buffer<uint>& input_VAO);
+		buffer<float>& input_VBO, buffer<uint>& input_VAO) = 0;
 	uint getOutputVertexSize();
-private:
-	uint m_width_resolution;
-	uint m_height_resolution;
-	uint m_output_vertex_size = 7;
-	uint m_input_vertex_size = 7;
+protected:
+	virtual void setIOVertexSizes() = 0;
+	uint m_output_vertex_size = 4;
+	uint m_input_vertex_size = 4;
 };
-
