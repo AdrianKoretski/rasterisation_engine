@@ -29,16 +29,16 @@ void Pipeline::renderObject(buffer<float>& VBO, buffer<uint>& VAO)
 void Pipeline::processVertices(buffer<float>& output_VBO, buffer<uint>& output_VAO, buffer<float>& input_VBO, buffer<uint>& input_VAO)
 {
 	buffer<float> perspective_VBO;
-	m_vertex_shader[0]->processVertices(perspective_VBO, input_VBO);
-	m_vertex_post_processor[0]->postProcessVertices(output_VBO, output_VAO, perspective_VBO, input_VAO);
-	m_vertex_size = m_vertex_post_processor[0]->getOutputDataSize();
+	m_vertex_shader->processVertices(perspective_VBO, input_VBO);
+	m_vertex_post_processor->postProcessVertices(output_VBO, output_VAO, perspective_VBO, input_VAO);
+	m_vertex_size = m_vertex_post_processor->getOutputDataSize();
 }
 
 void Pipeline::processTriangle(buffer<float>& output_fragments, float* vertex_0, float* vertex_1, float* vertex_2)
 {
 	buffer<float> fragments;
-	m_rasteriser[0]->rasterise(fragments, vertex_0, vertex_1, vertex_2);
-	m_fragment_shader[0]->shadeFragments(output_fragments, fragments);
+	m_rasteriser->rasterise(fragments, vertex_0, vertex_1, vertex_2);
+	m_fragment_shader->shadeFragments(output_fragments, fragments);
 }
 
 void Pipeline::renderTriangle(buffer<float>& input_VBO, uint* input_VAO)
@@ -50,7 +50,7 @@ void Pipeline::renderTriangle(buffer<float>& input_VBO, uint* input_VAO)
 		&input_VBO[m_vertex_size * input_VAO[1]],
 		&input_VBO[m_vertex_size * input_VAO[2]]
 	);
-	m_per_sample_processor[0]->postProcessFragments(post_processed_fragments, shaded_fragments);
+	m_per_sample_processor->postProcessFragments(post_processed_fragments, shaded_fragments);
 	for (uint j = 0; j < post_processed_fragments.size(); j += 5)
 		setPixel(&post_processed_fragments[j]);
 }
@@ -63,7 +63,7 @@ void Pipeline::clearBuffers()
 		m_image_buffer[i][1] = 0;
 		m_image_buffer[i][2] = 0;
 	}
-	m_per_sample_processor[0]->reset();
+	m_per_sample_processor->reset();
 }
 
 void Pipeline::saveRender(std::string file_name)
@@ -85,30 +85,65 @@ void Pipeline::setPixel(float* pixel_data)
 
 uint Pipeline::addVertexShader(VertexShader* vertex_shader)
 {
-	m_vertex_shader.push_back(vertex_shader);
-	return m_vertex_shader.size() - 1;
+	m_vertex_shaders.push_back(vertex_shader);
+	return m_vertex_shaders.size() - 1;
 }
 
 uint Pipeline::addVertexPostProcessor(VertexPostProcessor* vertex_post_processor)
 {
-	m_vertex_post_processor.push_back(vertex_post_processor);
-	return m_vertex_post_processor.size() - 1;
+	m_vertex_post_processors.push_back(vertex_post_processor);
+	return m_vertex_post_processors.size() - 1;
 }
 
 uint Pipeline::addRasteriser(Rasteriser* rasteriser)
 {
-	m_rasteriser.push_back(rasteriser);
-	return m_rasteriser.size() - 1;
+	m_rasterisers.push_back(rasteriser);
+	return m_rasterisers.size() - 1;
 }
 
 uint Pipeline::addFragmentShader(FragmentShader* fragment_shader)
 {
-	m_fragment_shader.push_back(fragment_shader);
-	return m_fragment_shader.size() - 1;
+	m_fragment_shaders.push_back(fragment_shader);
+	return m_fragment_shaders.size() - 1;
 }
 
 uint Pipeline::addPerSampleProcessor(PerSampleProcessor* per_sample_processor)
 {
-	m_per_sample_processor.push_back(per_sample_processor);
-	return m_per_sample_processor.size() - 1;
+	m_per_sample_processors.push_back(per_sample_processor);
+	return m_per_sample_processors.size() - 1;
+}
+
+void Pipeline::setCurrentVertexShader(uint index)
+{
+	if (index >= m_vertex_shaders.size() || index < 0)
+		return;
+	m_vertex_shader = m_vertex_shaders[index];
+}
+
+void Pipeline::setCurrentVertexPostProcessor(uint index)
+{
+	if (index >= m_vertex_post_processors.size() || index < 0)
+		return;
+	m_vertex_post_processor = m_vertex_post_processors[index];
+}
+
+void Pipeline::setCurrentRasteriser(uint index)
+{
+	if (index >= m_rasterisers.size() || index < 0)
+		return;
+	m_rasteriser = m_rasterisers[index];
+}
+
+void Pipeline::setCurrentFragmentShader(uint index)
+{
+	if (index >= m_fragment_shaders.size() || index < 0)
+		return;
+	m_fragment_shader = m_fragment_shaders[index];
+}
+
+void Pipeline::setCurrentPerSampleProcessor(uint index)
+{
+	if (index >= m_per_sample_processors.size() || index < 0)
+		return;
+	m_per_sample_processor = m_per_sample_processors[index];
 }

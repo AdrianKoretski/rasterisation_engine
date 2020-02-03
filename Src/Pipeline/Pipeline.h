@@ -5,14 +5,10 @@
 #include "../Definitions.h"
 #include "../Scene/Camera.h"
 #include "VertexShader/VertexShader.h"
-#include "VertexShader/TestVertexShader.h"
 #include "VertexPostProcessor/VertexPostProcessor.h"
-#include "VertexPostProcessor/DefaultVPP.h"
 #include "Rasterisation/Rasteriser.h"
 #include "FragmentShader/FragmentShader.h"
-#include "FragmentShader/TestFragmentShader.h"
 #include "PerSampleProcessor/PerSampleProcessor.h"
-#include "PerSampleProcessor/DefaultPSP.h"
 
 class Pipeline
 {
@@ -25,6 +21,12 @@ public:
 	uint addFragmentShader(FragmentShader* fragment_shader);
 	uint addPerSampleProcessor(PerSampleProcessor* per_sample_processor);
 
+	void setCurrentVertexShader(uint index);
+	void setCurrentVertexPostProcessor(uint index);
+	void setCurrentRasteriser(uint index);
+	void setCurrentFragmentShader(uint index);
+	void setCurrentPerSampleProcessor(uint index);
+
 	void renderObject(buffer<float>& VBO, buffer<uint>& VAO);
 	void saveRender(std::string file_name);
 	void clearBuffers();
@@ -36,18 +38,17 @@ private:
 	void renderTriangle(buffer<float>& input_VBO, uint* input_VAO);
 	void processTriangle(buffer<float>& output_fragments, float* vertex_0, float* vertex_1, float* vertex_2);
 
-	buffer<VertexShader*> m_vertex_shader;
-	buffer<VertexPostProcessor*> m_vertex_post_processor;
-	buffer<Rasteriser*> m_rasteriser;
-	buffer<FragmentShader*> m_fragment_shader;
-	buffer<PerSampleProcessor*> m_per_sample_processor;
+	buffer<VertexShader*> m_vertex_shaders;
+	buffer<VertexPostProcessor*> m_vertex_post_processors;
+	buffer<Rasteriser*> m_rasterisers;
+	buffer<FragmentShader*> m_fragment_shaders;
+	buffer<PerSampleProcessor*> m_per_sample_processors;
 
-	uint m_current_vertex_shader;
-	uint m_current_vertex_post_processor;
-	uint m_current_rasteriser;
-	uint m_current_fragment_shader;
-	uint m_current_per_sample_processor;
-
+	VertexShader* m_vertex_shader;
+	VertexPostProcessor* m_vertex_post_processor;
+	Rasteriser* m_rasteriser;
+	FragmentShader* m_fragment_shader;
+	PerSampleProcessor* m_per_sample_processor;
 
 	uint m_vertex_size;
 	uint m_image_buffer_width;

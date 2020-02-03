@@ -52,6 +52,11 @@ int main()
 	pipeline.addFragmentShader(fs);
 	pipeline.addPerSampleProcessor(psp);
 
+	pipeline.setCurrentVertexShader(0);
+	pipeline.setCurrentVertexPostProcessor(0);
+	pipeline.setCurrentRasteriser(0);
+	pipeline.setCurrentFragmentShader(0);
+	pipeline.setCurrentPerSampleProcessor(0);
 
 	buffer<float> VBO;
 	buffer<uint> VAO;
