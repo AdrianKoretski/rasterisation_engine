@@ -1,6 +1,5 @@
 #pragma once
 
-#include "..//..//Definitions.h"
 #include "../PipelineElement.h"
 
 class PerSampleProcessor : public PipelineElement
@@ -13,4 +12,3 @@ protected:
 
 	float* m_depth_buffer;
 };
-
