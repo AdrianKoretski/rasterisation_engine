@@ -10,7 +10,7 @@ Pipeline::Pipeline(uint image_buffer_width, uint image_buffer_height, Camera* ca
 	m_vertex_post_processor.push_back(new DefaultVPP());
 	m_vertex_post_processor[0]->setUniform(&image_buffer_width, 0);
 	m_vertex_post_processor[0]->setUniform(&image_buffer_height, 1);
-	m_rasteriser.push_back(*new Rasteriser(image_buffer_width, image_buffer_height));
+	m_rasteriser.push_back(*new Rasteriser());
 	m_fragment_shader.push_back(new TestFragmentShader());
 	m_per_sample_processor.push_back(new DefaultPSP());
 	m_per_sample_processor[0]->setUniform(&image_buffer_width, 0);

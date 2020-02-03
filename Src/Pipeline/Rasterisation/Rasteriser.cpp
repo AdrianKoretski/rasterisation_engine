@@ -2,10 +2,8 @@
 #include <iostream>
 #include <random>
 
-Rasteriser::Rasteriser(uint width_resolution, uint height_resolution)
+Rasteriser::Rasteriser()
 {
-	m_width_resolution = width_resolution;
-	m_height_resolution = height_resolution;
 }
 
 void Rasteriser::rasterise(buffer<float>& output_fragments, float* vertex_0, float* vertex_1, float* vertex_2)
@@ -46,6 +44,15 @@ bool Rasteriser::isCCW(float* vertex_0, float* vertex_1, float* vertex_2)
 	if (glm::cross(v1, v2).z <= 0)
 		return false;
 	return true;
+}
+
+void Rasteriser::setIOFragmentSizes()
+{
+	m_fragment_size = 7;
+}
+
+void Rasteriser::setupUniforms()
+{
 }
 
 void Rasteriser::fillTriangle(buffer<float>& output_fragments, buffer<float>& rightmost_fragments, Triangle triangle)
