@@ -2,19 +2,19 @@
 
 TestFragmentShader::TestFragmentShader()
 {
-	setIOFragmentSizes();
+	setIODataSize();
 	setupUniforms();
 }
 
 void TestFragmentShader::shadeFragment(float* output_fragment, float* inupt_fragment)
 {
-	memcpy(output_fragment, inupt_fragment, m_input_fragment_size * sizeof(float));
+	memcpy(output_fragment, inupt_fragment, m_input_data_size * sizeof(float));
 }
 
-void TestFragmentShader::setIOFragmentSizes()
+void TestFragmentShader::setIODataSize()
 {
-	m_input_fragment_size = 7;
-	m_output_fragment_size = 7;
+	m_input_data_size = 7;
+	m_output_data_size = 7;
 }
 
 void TestFragmentShader::setupUniforms()

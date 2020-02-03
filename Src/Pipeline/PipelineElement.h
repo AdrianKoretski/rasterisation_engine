@@ -2,14 +2,20 @@
 
 #include "../Definitions.h"
 
-class Uniform
+class PipelineElement
 {
 public:
-	Uniform();
+	PipelineElement();
 	void setUniform(void* uniform, uint index);
+	uint getInputDataSize();
+	uint getOutputDataSize();
 protected:
 	virtual void setupUniforms() = 0;
+	virtual void setIODataSize() = 0;
 
 	buffer<void*> m_uniform;
 	buffer<uint> m_uniform_size;
+
+	uint m_input_data_size = 4;
+	uint m_output_data_size = 4;
 };

@@ -8,6 +8,6 @@ public:
 	TestFragmentShader();
 protected:
 	void shadeFragment(float* output_fragment, float* inupt_fragment);
-	void setIOFragmentSizes();
+	void setIODataSize();
 	void setupUniforms();
 };

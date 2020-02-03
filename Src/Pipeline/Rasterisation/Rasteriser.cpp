@@ -4,6 +4,8 @@
 
 Rasteriser::Rasteriser()
 {
+	setIODataSize();
+	setupUniforms();
 }
 
 void Rasteriser::rasterise(buffer<float>& output_fragments, float* vertex_0, float* vertex_1, float* vertex_2)
@@ -46,9 +48,10 @@ bool Rasteriser::isCCW(float* vertex_0, float* vertex_1, float* vertex_2)
 	return true;
 }
 
-void Rasteriser::setIOFragmentSizes()
+void Rasteriser::setIODataSize()
 {
-	m_fragment_size = 7;
+	m_input_data_size = 7;
+	m_output_data_size = 7;
 }
 
 void Rasteriser::setupUniforms()
@@ -63,10 +66,9 @@ void Rasteriser::fillTriangle(buffer<float>& output_fragments, buffer<float>& ri
 		float y = rightmost_fragments[i + 1];
 		while (triangle.isContained(x, y))
 		{
-			int index = rand() % 3;
 			output_fragments.push_back(x);
 			output_fragments.push_back(y);
-			for (uint j = 2; j < m_fragment_size; j++)
+			for (uint j = 2; j < m_input_data_size; j++)
 				output_fragments.push_back(triangle.interpolate(x, y, j));
 			x -= 1;
 		}

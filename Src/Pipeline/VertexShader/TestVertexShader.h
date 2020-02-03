@@ -8,7 +8,7 @@ public:
 	TestVertexShader();
 protected:
 	void shadeVertex(float* output, float* input);
-	void setIOVertexSizes();
+	void setIODataSize();
 	void setupUniforms();
 private:
 	m4f* m_persp;

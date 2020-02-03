@@ -10,7 +10,7 @@ public:
 		buffer<float>& output_VBO, buffer<uint>& output_VAO,
 		buffer<float>& input_VBO, buffer<uint>& input_VAO);
 protected:
-	void setIOVertexSizes();
+	void setIODataSize();
 	void setupUniforms();
 private:
 	uint* m_width_resolution;

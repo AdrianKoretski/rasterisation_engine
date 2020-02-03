@@ -10,7 +10,7 @@ public:
 	void setupBuffer();
 protected:
 	void postProcessFragment(buffer<float>& output_fragment, float* input_fragment);
-	void setIOFragmentSizes();
+	void setIODataSize();
 	void setupUniforms();
 private:
 	uint* m_depth_buffer_width;

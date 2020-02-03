@@ -5,8 +5,3 @@
 VertexPostProcessor::VertexPostProcessor()
 {
 }
-
-uint VertexPostProcessor::getOutputVertexSize()
-{
-	return m_output_vertex_size;
-}

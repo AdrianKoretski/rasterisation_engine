@@ -2,7 +2,7 @@
 
 DefaultPSP::DefaultPSP()
 {
-	setIOFragmentSizes();
+	setIODataSize();
 	setupUniforms();
 }
 
@@ -15,14 +15,15 @@ void DefaultPSP::postProcessFragment(buffer<float>& output_fragment, float* inpu
 	if (input_fragment[2] <= m_depth_buffer[x + y * *m_depth_buffer_width])
 		return;
 	m_depth_buffer[x + y * *m_depth_buffer_width] = input_fragment[2];
-	for (uint i = 0; i < m_input_fragment_size; i++)
+	for (uint i = 0; i < m_input_data_size; i++)
 		if (i != 2 && i != 3)
 			output_fragment.push_back(input_fragment[i]);
 }
 
-void DefaultPSP::setIOFragmentSizes()
+void DefaultPSP::setIODataSize()
 {
-	m_input_fragment_size = 7;
+	m_input_data_size = 7;
+	m_output_data_size = 7;
 }
 
 void DefaultPSP::setupUniforms()

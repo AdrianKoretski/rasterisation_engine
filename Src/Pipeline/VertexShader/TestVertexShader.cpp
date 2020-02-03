@@ -2,7 +2,7 @@
 
 TestVertexShader::TestVertexShader()
 {
-	setIOVertexSizes();
+	setIODataSize();
 	setupUniforms();
 	m_persp = (m4f*)(m_uniform[0]);
 }
@@ -20,14 +20,14 @@ void TestVertexShader::shadeVertex(float* output, float* input)
 
 	for (int i = 0; i < 4; i++)
 		output[i] = out[i];
-	for (uint i = 4; i < m_output_vertex_size; i++)
+	for (uint i = 4; i < m_output_data_size; i++)
 		output[i] = input[i];
 }
 
-void TestVertexShader::setIOVertexSizes()
+void TestVertexShader::setIODataSize()
 {
-	m_input_vertex_size = 7;
-	m_output_vertex_size = 7;
+	m_input_data_size = 7;
+	m_output_data_size = 7;
 }
 
 void TestVertexShader::setupUniforms()
