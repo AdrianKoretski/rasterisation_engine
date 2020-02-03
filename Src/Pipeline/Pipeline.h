@@ -12,6 +12,7 @@
 #include "FragmentShader/FragmentShader.h"
 #include "FragmentShader/TestFragmentShader.h"
 #include "PerSampleProcessor/PerSampleProcessor.h"
+#include "PerSampleProcessor/DefaultPSP.h"
 
 class Pipeline
 {
@@ -32,7 +33,7 @@ private:
 	buffer<VertexPostProcessor*> m_vertex_post_processor;
 	buffer<Rasteriser> m_rasteriser;
 	buffer<FragmentShader*> m_fragment_shader;
-	buffer<PerSampleProcessor> m_per_sample_processor;
+	buffer<PerSampleProcessor*> m_per_sample_processor;
 
 	uint m_vertex_size;
 	uint m_image_buffer_width;

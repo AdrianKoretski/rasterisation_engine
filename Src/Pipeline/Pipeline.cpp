@@ -12,7 +12,10 @@ Pipeline::Pipeline(uint image_buffer_width, uint image_buffer_height, Camera* ca
 	m_vertex_post_processor[0]->setUniform(&image_buffer_height, 1);
 	m_rasteriser.push_back(*new Rasteriser(image_buffer_width, image_buffer_height));
 	m_fragment_shader.push_back(new TestFragmentShader());
-	m_per_sample_processor.push_back(*new PerSampleProcessor(image_buffer_width, image_buffer_height));
+	m_per_sample_processor.push_back(new DefaultPSP());
+	m_per_sample_processor[0]->setUniform(&image_buffer_width, 0);
+	m_per_sample_processor[0]->setUniform(&image_buffer_height, 1);
+	m_per_sample_processor[0]->setupBuffer();
 
 	m_image_buffer.resize(m_image_buffer_width * m_image_buffer_height);
 	for (uint i = 0; i < m_image_buffer_width * m_image_buffer_height; i++)
@@ -45,7 +48,7 @@ void Pipeline::clearBuffers()
 		m_image_buffer[i][1] = 0;
 		m_image_buffer[i][2] = 0;
 	}
-	m_per_sample_processor[0].clearBuffer();
+	m_per_sample_processor[0]->clearBuffer();
 }
 
 void Pipeline::saveRender(std::string file_name)
@@ -89,7 +92,7 @@ void Pipeline::renderTriangle(buffer<float>& input_VBO, uint* input_VAO)
 		&input_VBO[m_vertex_size * input_VAO[1]],
 		&input_VBO[m_vertex_size * input_VAO[2]]
 	);
-	m_per_sample_processor[0].postProcessFragments(post_processed_fragments, shaded_fragments);
+	m_per_sample_processor[0]->postProcessFragments(post_processed_fragments, shaded_fragments);
 	for (uint j = 0; j < post_processed_fragments.size(); j += 5)
 		setPixel(&post_processed_fragments[j]);
 }
