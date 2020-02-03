@@ -9,6 +9,8 @@ public:
 	void postProcessVertices(
 		buffer<float>& output_VBO, buffer<uint>& output_VAO,
 		buffer<float>& input_VBO, buffer<uint>& input_VAO);
+	void setup();
+	void reset();
 protected:
 	void setIODataSize();
 	void setupUniforms();

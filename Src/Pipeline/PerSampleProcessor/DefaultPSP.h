@@ -6,8 +6,8 @@ class DefaultPSP : public PerSampleProcessor
 {
 public:
 	DefaultPSP();
-	void clearBuffer();
-	void setupBuffer();
+	void setup();
+	void reset();
 protected:
 	void postProcessFragment(buffer<float>& output_fragment, float* input_fragment);
 	void setIODataSize();

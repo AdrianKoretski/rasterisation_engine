@@ -12,6 +12,8 @@ class Rasteriser : public PipelineElement
 public:
 	Rasteriser();
 	void rasterise(buffer<float>& output_fragments, float* vertex_0, float* vertex_1, float* vertex_2);
+	void setup();
+	void reset();
 private:
 	bool isCCW(float* vertex_0, float* vertex_1, float* vertex_2);
 	void setIODataSize();

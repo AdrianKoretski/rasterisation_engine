@@ -7,6 +7,12 @@ DefaultVPP::DefaultVPP()
 	setupUniforms();
 }
 
+void DefaultVPP::setup() {
+}
+
+void DefaultVPP::reset() {
+}
+
 void DefaultVPP::postProcessVertices(buffer<float>& output_VBO, buffer<uint>& output_VAO, buffer<float>& input_VBO, buffer<uint>& input_VAO)
 {
 	for (uint i = 0; i < input_VBO.size(); i += m_output_data_size)

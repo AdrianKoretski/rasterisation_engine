@@ -15,7 +15,7 @@ Pipeline::Pipeline(uint image_buffer_width, uint image_buffer_height, Camera* ca
 	m_per_sample_processor.push_back(new DefaultPSP());
 	m_per_sample_processor[0]->setUniform(&image_buffer_width, 0);
 	m_per_sample_processor[0]->setUniform(&image_buffer_height, 1);
-	m_per_sample_processor[0]->setupBuffer();
+	m_per_sample_processor[0]->setup();
 
 	m_image_buffer.resize(m_image_buffer_width * m_image_buffer_height);
 	for (uint i = 0; i < m_image_buffer_width * m_image_buffer_height; i++)
@@ -48,7 +48,7 @@ void Pipeline::clearBuffers()
 		m_image_buffer[i][1] = 0;
 		m_image_buffer[i][2] = 0;
 	}
-	m_per_sample_processor[0]->clearBuffer();
+	m_per_sample_processor[0]->reset();
 }
 
 void Pipeline::saveRender(std::string file_name)

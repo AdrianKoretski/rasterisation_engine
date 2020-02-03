@@ -37,13 +37,13 @@ void DefaultPSP::setupUniforms()
 	m_depth_buffer_height = (uint*)m_uniform[1];
 }
 
-void DefaultPSP::clearBuffer()
+void DefaultPSP::reset()
 {
 	for (uint i = 0; i < *m_depth_buffer_width * *m_depth_buffer_height; i++)
 		m_depth_buffer[i] = -std::numeric_limits<float>::infinity();
 }
 
-void DefaultPSP::setupBuffer()
+void DefaultPSP::setup()
 {
 	m_depth_buffer = new float[*m_depth_buffer_width * *m_depth_buffer_height];
 	for (uint i = 0; i < *m_depth_buffer_width * *m_depth_buffer_height; i++)

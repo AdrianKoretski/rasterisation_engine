@@ -4,7 +4,12 @@ TestVertexShader::TestVertexShader()
 {
 	setIODataSize();
 	setupUniforms();
-	m_persp = (m4f*)(m_uniform[0]);
+}
+
+void TestVertexShader::setup() {
+}
+
+void TestVertexShader::reset() {
 }
 
 void TestVertexShader::shadeVertex(float* output, float* input)
@@ -35,4 +40,5 @@ void TestVertexShader::setupUniforms()
 	m_uniform.resize(1);
 	m_uniform_size.push_back(sizeof(m4f));
 	m_uniform[0] = malloc(m_uniform_size[0]);
+	m_persp = (m4f*)(m_uniform[0]);
 }

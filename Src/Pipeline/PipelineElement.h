@@ -9,6 +9,9 @@ public:
 	void setUniform(void* uniform, uint index);
 	uint getInputDataSize();
 	uint getOutputDataSize();
+
+	virtual void setup() = 0;
+	virtual void reset() = 0;
 protected:
 	virtual void setupUniforms() = 0;
 	virtual void setIODataSize() = 0;

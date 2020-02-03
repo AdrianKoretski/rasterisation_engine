@@ -8,6 +8,12 @@ Rasteriser::Rasteriser()
 	setupUniforms();
 }
 
+void Rasteriser::setup() {
+}
+
+void Rasteriser::reset() {
+}
+
 void Rasteriser::rasterise(buffer<float>& output_fragments, float* vertex_0, float* vertex_1, float* vertex_2)
 {
 	if (!isCCW(vertex_0, vertex_1, vertex_2))

@@ -6,6 +6,8 @@ class TestVertexShader : public VertexShader
 {
 public:
 	TestVertexShader();
+	void setup();
+	void reset();
 protected:
 	void shadeVertex(float* output, float* input);
 	void setIODataSize();
