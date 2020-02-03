@@ -12,7 +12,5 @@ protected:
 	virtual void postProcessFragment(buffer<float>& output_fragment, float* input_fragment) = 0;
 
 	float* m_depth_buffer;
-	uint m_depth_buffer_width = 1920;
-	uint m_depth_buffer_height = 1080;
 };
 
