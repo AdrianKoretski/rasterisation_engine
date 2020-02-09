@@ -12,7 +12,7 @@ void DefaultPSP::postProcessFragment(buffer<float>& output_fragment, float* inpu
 	uint y = uint(floor(input_fragment[1]));
 	if (x >= *m_depth_buffer_width || x < 0 || y >= *m_depth_buffer_height || y < 0)
 		return;
-	if (input_fragment[2] <= m_depth_buffer[x + y * *m_depth_buffer_width])
+	if (input_fragment[2] <= m_depth_buffer[x + y * *m_depth_buffer_width] || input_fragment[2] < -1 || input_fragment[2] > 1)
 		return;
 	m_depth_buffer[x + y * *m_depth_buffer_width] = input_fragment[2];
 	for (uint i = 0; i < m_input_data_size; i++)

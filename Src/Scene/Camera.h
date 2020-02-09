@@ -22,7 +22,7 @@ private:
 	v3f m_forward = v3f(0, 0, -1);
 
 	float m_near_plane = -1;
-	float m_far_plane = -2;
+	float m_far_plane = -3;
 	float m_left = -1;
 	float m_right = 1;
 	float m_top = 1;

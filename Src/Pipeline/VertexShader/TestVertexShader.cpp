@@ -1,4 +1,5 @@
 #include "TestVertexShader.h"
+#include <iostream>
 
 TestVertexShader::TestVertexShader()
 {
@@ -17,9 +18,7 @@ void TestVertexShader::shadeVertex(float* output, float* input)
 	v4f in(input[0], input[1], input[2], input[3]);
 
 	v4f out = *m_persp * in;
-
 	float depth = 1.f/out.w;
-
 	out *= depth;
 	out.w = depth;
 
