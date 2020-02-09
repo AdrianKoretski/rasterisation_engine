@@ -24,12 +24,12 @@ void Rasteriser::rasterise(buffer<float>& output_fragments, float* vertex_0, flo
 
 	for (int i = 0; i < 3; i++)
 	{
-		float* current_vertex = triangle.getVertex(i);
-		if (triangle.getVector(i)[1] <= 0)
+		v2f curr_position = triangle.getCSPosition(i);
+		if (triangle.getVector(i).y <= 0)
 			continue;
-		v2f position(ceil(current_vertex[0]) + 0.5f, floor(current_vertex[1]) + 0.5f);
+		v2f position(ceil(curr_position.x) + 0.5f, floor(curr_position.y) + 0.5f);
 
-		while (position.y <= triangle.getNext(current_vertex)[1])
+		while (position.y <= triangle.getCSPosition(triangle.next(i)).y)
 		{
 			while (!triangle.isOnCorrectSide(position.x, position.y, i))
 				position.x -= 1;
@@ -66,16 +66,20 @@ void Rasteriser::setupUniforms()
 
 void Rasteriser::fillTriangle(buffer<float>& output_fragments, buffer<float>& rightmost_fragments, Triangle triangle)
 {
+	uint index;
+	float x;
+	float y;
 	for (uint i = 0; i < rightmost_fragments.size(); i += 2)
 	{
-		float x = rightmost_fragments[i + 0];
-		float y = rightmost_fragments[i + 1];
+		x = rightmost_fragments[i + 0];
+		y = rightmost_fragments[i + 1];
 		while (triangle.isContained(x, y))
 		{
-			output_fragments.push_back(x);
-			output_fragments.push_back(y);
-			for (uint j = 2; j < m_input_data_size; j++)
-				output_fragments.push_back(triangle.depth_correct_interpolate(x, y, j));
+			index = output_fragments.size();
+			output_fragments.resize(output_fragments.size() + m_output_data_size);
+			output_fragments[index + 0] = x;
+			output_fragments[index + 1] = y;
+			triangle.depth_correct_interpolate(&output_fragments[index], m_output_data_size);
 			x -= 1;
 		}
 	}

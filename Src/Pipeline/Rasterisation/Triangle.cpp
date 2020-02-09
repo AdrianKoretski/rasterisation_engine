@@ -6,38 +6,57 @@ Triangle::Triangle(float* v0, float* v1, float* v2)
 	m_vertex[1] = v1;
 	m_vertex[2] = v2;
 
-	for (int i = 0; i < 3; i++)
-	{
-		m_clip_position[i] = v2f(m_vertex[i][0], m_vertex[i][1]);
-		m_world_position[i] = v3f(m_clip_position[i], 1) / m_vertex[i][3];
-	}
+	setupVectors();
+	setupTieBreakers();
+	setupPreCompute();
+}
 
-	for (int i = 0; i < 3; i++)
-	{
-		m_clip_vector[i] = m_clip_position[nxt(i)] - m_clip_position[i];
-		m_world_vector[i] = m_world_position[nxt(i)] - m_world_position[i];
+v2f Triangle::getCSPosition(uint index)
+{
+	return m_CS_position[index];
+}
 
-		if (m_clip_vector[i].y < 0 || (m_clip_vector[i].y == 0 && m_clip_vector[i].x > 0))
-			m_is_equal[i] = true;
-		else
-			m_is_equal[i] = false;
-	}
-}
-float* Triangle::getVertex(uint index)
-{
-	return m_vertex[index];
-}
-float* Triangle::getNext(float* current)
-{
-	for (int i = 0; i < 3; i++)
-		if (m_vertex[i] == current)
-			return m_vertex[(i + 1) % 3];
-	return NULL;
-}
-uint Triangle::nxt(uint current)
+uint Triangle::next(uint current)
 {
 	return (current + 1) % 3;
 }
+
+void Triangle::setupTieBreakers()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		if (m_CS_vector[i].y < 0 || (m_CS_vector[i].y == 0 && m_CS_vector[i].x > 0))
+			m_tie_breaker[i] = true;
+		else
+			m_tie_breaker[i] = false;
+	}
+}
+
+void Triangle::setupPreCompute()
+{
+	float triangle_area = cross(m_CS_vector[0], m_CS_vector[1]);
+	for (int i = 0; i < 3; i++)
+		m_CS_pre_weight[i] = m_CS_vector[i] / triangle_area;
+	triangle_area = cross(m_WS_vector[0], m_WS_vector[1]);
+	for (int i = 0; i < 3; i++)
+		m_WS_pre_weight[i] = m_WS_vector[i] / triangle_area;
+}
+
+void Triangle::setupVectors()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		m_CS_position[i] = v2f(m_vertex[i][0], m_vertex[i][1]);
+		m_WS_position[i] = v3f(m_CS_position[i], 1) / m_vertex[i][3];
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		m_CS_vector[i] = m_CS_position[next(i)] - m_CS_position[i];
+		m_WS_vector[i] = m_WS_position[next(i)] - m_WS_position[i];
+	}
+}
+
 bool Triangle::isContained(float x, float y)
 {
 	for (int i = 0; i < 3; i++)
@@ -45,45 +64,48 @@ bool Triangle::isContained(float x, float y)
 			return false;
 	return true;
 }
+
 bool Triangle::isOnCorrectSide(float x, float y, uint index)
 {
-	v2f vect(x - m_vertex[index][0], y - m_vertex[index][1]);
-	float cross_product = cross(m_clip_vector[index], vect);
+	v2f vect(x - m_CS_position[index][0], y - m_CS_position[index][1]);
+	float cross_product = cross(m_CS_vector[index], vect);
 
-	return cross_product > 0 || (cross_product == 0 && m_is_equal[index]);
+	return cross_product > 0 || (cross_product == 0 && m_tie_breaker[index]);
 }
 
 float Triangle::interpolate(float x, float y, uint index)
 {
-	float* weights = new float[3];
+	v2f CS_p = v2f(x, y);
+	float value = 0;
+
 	for (int i = 0; i < 3; i++)
-		weights[(i + 2) % 3] = cross(v2f(m_vertex[i][0] - x, m_vertex[i][1] - y), m_clip_vector[i]);
-	float triangle_area = cross(m_clip_vector[0], m_clip_vector[1]);
-	float value = (weights[0] * m_vertex[0][index] + weights[1] * m_vertex[1][index] + weights[2] * m_vertex[2][index]) / triangle_area;
-	delete[] weights;
+		value += m_vertex[i][index] * cross(m_CS_position[next(i)] - CS_p, m_CS_pre_weight[next(i)]);
+
 	return value;
 }
 
-float Triangle::depth_correct_interpolate(float x, float y, uint index)
+void Triangle::depth_correct_interpolate(float* data, uint size)
 {
-	float* weights = new float[3];
-	for (int i = 0; i < 3; i++)
-		weights[(i + 2) % 3] = cross(v2f(m_vertex[i][0] - x, m_vertex[i][1] - y), m_clip_vector[i]);
-	float triangle_area = cross(m_clip_vector[0], m_clip_vector[1]);
-	float value = (weights[0] * m_vertex[0][3] + weights[1] * m_vertex[1][3] + weights[2] * m_vertex[2][3]) / triangle_area;
+	v2f CS_p = v2f(data[0], data[1]);
+	v3f WS_p = v3f(CS_p, 1);
+	float weights[3];
+	float value = 0;
 
-	v3f p = v3f(x, y, 1) / value;
-	triangle_area = glm::length(glm::cross(m_world_vector[0], m_world_vector[1]));
+	data[2] = interpolate(CS_p.x, CS_p.y, 2);
+	data[3] = interpolate(CS_p.x, CS_p.y, 3);
+
+	WS_p = WS_p / data[3];
+
+
 	for (int i = 0; i < 3; i++)
-		weights[(i + 2) % 3] = glm::length(glm::cross(m_world_vector[i], p - m_world_position[i]));
-	value = (weights[0] * m_vertex[0][index] + weights[1] * m_vertex[1][index] + weights[2] * m_vertex[2][index]) / triangle_area;
-	delete[] weights;
-	return value;
+		weights[i] = glm::length(glm::cross(m_WS_pre_weight[next(i)], WS_p - m_WS_position[next(i)]));
+	for (int i = 4; i < size; i++)
+		data[i] = m_vertex[0][i] * weights[0] + m_vertex[1][i] * weights[1] + m_vertex[2][i] * weights[2];
 }
 
 v2f Triangle::getVector(uint index)
 {
-	return m_clip_vector[index];
+	return m_CS_vector[index];
 }
 
 float Triangle::cross(v2f a, v2f b)

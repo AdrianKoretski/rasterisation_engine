@@ -6,24 +6,29 @@ class Triangle
 {
 public:
 	Triangle(float* v0, float* v1, float* v2);
-	float* getVertex(uint index);
+	v2f getCSPosition(uint index);
 	v2f getVector(uint index);
-	float* getNext(float* current);
-	uint nxt(uint current);
 	bool isContained(float x, float y);
 	bool isOnCorrectSide(float x, float y, uint index);
 	float interpolate(float x, float y, uint index);
-	float depth_correct_interpolate(float x, float y, uint index);
+	void depth_correct_interpolate(float* data, uint size);
+	uint next(uint current);
 private:
-	float** m_vertex = new float* [3];
+	void setupTieBreakers();
+	void setupPreCompute();
+	void setupVectors();
 
-	v2f* m_clip_position = new v2f[3];
-	v2f* m_clip_vector = new v2f[3];
-	v3f* m_world_position = new v3f[3];
-	v3f* m_world_vector = new v3f[3];
+	float* m_vertex[3];
 
-	v2f* m_lines = new v2f[3];
-	bool* m_is_equal = new bool[3];
+	v2f m_CS_position[3];
+	v2f m_CS_vector[3];
+	v3f m_WS_position[3];
+	v3f m_WS_vector[3];
+
+	v2f m_CS_pre_weight[3];
+	v3f m_WS_pre_weight[3];
+
+	bool m_tie_breaker[3];
 
 	float cross(v2f a, v2f b);
 };
