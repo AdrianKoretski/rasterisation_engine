@@ -25,7 +25,7 @@ void Rasteriser::rasterise(buffer<float>& output_fragments, float* vertex_0, flo
 	for (int i = 0; i < 3; i++)
 	{
 		float* current_vertex = triangle.getVertex(i);
-		if (triangle.getLine(i)[1] <= 0)
+		if (triangle.getVector(i)[1] <= 0)
 			continue;
 		v2f position(ceil(current_vertex[0]) + 0.5f, floor(current_vertex[1]) + 0.5f);
 
@@ -56,8 +56,8 @@ bool Rasteriser::isCCW(float* vertex_0, float* vertex_1, float* vertex_2)
 
 void Rasteriser::setIODataSize()
 {
-	m_input_data_size = 7;
-	m_output_data_size = 7;
+	m_input_data_size = 12;
+	m_output_data_size = 12;
 }
 
 void Rasteriser::setupUniforms()
@@ -75,7 +75,7 @@ void Rasteriser::fillTriangle(buffer<float>& output_fragments, buffer<float>& ri
 			output_fragments.push_back(x);
 			output_fragments.push_back(y);
 			for (uint j = 2; j < m_input_data_size; j++)
-				output_fragments.push_back(triangle.interpolate(x, y, j));
+				output_fragments.push_back(triangle.depth_correct_interpolate(x, y, j));
 			x -= 1;
 		}
 	}

@@ -28,8 +28,8 @@ void DefaultVPP::postProcessVertices(buffer<float>& output_VBO, buffer<uint>& ou
 
 void DefaultVPP::setIODataSize()
 {
-	m_output_data_size = 7;
-	m_input_data_size = 7;
+	m_output_data_size = 12;
+	m_input_data_size = 12;
 }
 
 void DefaultVPP::setupUniforms()

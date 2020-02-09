@@ -18,10 +18,10 @@ void TestVertexShader::shadeVertex(float* output, float* input)
 
 	v4f out = *m_persp * in;
 
-	out.x /= out.w;
-	out.y /= out.w;
-	out.z /= out.w;
-	out.w = 1/out.w;
+	float depth = 1.f/out.w;
+
+	out *= depth;
+	out.w = depth;
 
 	for (int i = 0; i < 4; i++)
 		output[i] = out[i];
@@ -31,8 +31,8 @@ void TestVertexShader::shadeVertex(float* output, float* input)
 
 void TestVertexShader::setIODataSize()
 {
-	m_input_data_size = 7;
-	m_output_data_size = 7;
+	m_input_data_size = 12;
+	m_output_data_size = 12;
 }
 
 void TestVertexShader::setupUniforms()

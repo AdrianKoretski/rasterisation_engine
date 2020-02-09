@@ -19,8 +19,8 @@ void TestFragmentShader::shadeFragment(float* output_fragment, float* inupt_frag
 
 void TestFragmentShader::setIODataSize()
 {
-	m_input_data_size = 7;
-	m_output_data_size = 7;
+	m_input_data_size = 12;
+	m_output_data_size = 12;
 }
 
 void TestFragmentShader::setupUniforms()

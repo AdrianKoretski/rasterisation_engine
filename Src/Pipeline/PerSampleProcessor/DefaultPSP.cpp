@@ -22,8 +22,8 @@ void DefaultPSP::postProcessFragment(buffer<float>& output_fragment, float* inpu
 
 void DefaultPSP::setIODataSize()
 {
-	m_input_data_size = 7;
-	m_output_data_size = 7;
+	m_input_data_size = 12;
+	m_output_data_size = 12;
 }
 
 void DefaultPSP::setupUniforms()
