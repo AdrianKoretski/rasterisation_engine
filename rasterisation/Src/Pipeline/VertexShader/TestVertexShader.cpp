@@ -19,7 +19,7 @@ void TestVertexShader::shadeVertex(float* output, float* input)
 
 	v4f out = *m_persp * in;
 	float depth = 1.f/out.w;
-	out *= depth;
+	out = out * depth;
 	out.w = depth;
 
 	for (int i = 0; i < 4; i++)

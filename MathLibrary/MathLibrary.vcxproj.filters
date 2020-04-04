@@ -13,10 +13,18 @@
     <ClCompile Include="Vec3.cpp">
       <Filter>Src</Filter>
     </ClCompile>
+    <ClCompile Include="VecOperations.cpp" />
+    <ClCompile Include="Vec2.cpp" />
+    <ClCompile Include="Vec4.cpp" />
+    <ClCompile Include="Mat4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vec3.h">
       <Filter>Src</Filter>
     </ClInclude>
+    <ClInclude Include="VecOperations.h" />
+    <ClInclude Include="Vec2.h" />
+    <ClInclude Include="Vec4.h" />
+    <ClInclude Include="Mat4.h" />
   </ItemGroup>
 </Project>

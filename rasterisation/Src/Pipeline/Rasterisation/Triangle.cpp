@@ -98,7 +98,7 @@ void Triangle::depth_correct_interpolate(float* data, uint size)
 
 
 	for (int i = 0; i < 3; i++)
-		weights[i] = glm::length(glm::cross(m_WS_pre_weight[next(i)], WS_p - m_WS_position[next(i)]));
+		weights[i] = glm::length((cross(m_WS_pre_weight[next(i)], WS_p - m_WS_position[next(i)])));
 	for (int i = 4; i < size; i++)
 		data[i] = m_vertex[0][i] * weights[0] + m_vertex[1][i] * weights[1] + m_vertex[2][i] * weights[2];
 }
