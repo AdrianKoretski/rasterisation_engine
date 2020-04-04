@@ -1,9 +1,8 @@
 rasterisation/Debug/*
-rasterisation/folder/*
 rasterisation/Release/*
-rasterisation/rasterisation.vcxproj*
+MathLibrary/Debug/*
+MathLibrary/Release/*
+*.exr
 .vs*
 Debug/*
 Release/*
-MathLibrary/*
-rasterisation.sln
