@@ -15,15 +15,17 @@ void TestVertexShader::reset() {
 
 void TestVertexShader::shadeVertex(float* output, float* input)
 {
-	v4f in(input[0], input[1], input[2], input[3]);
+	Vec4 in(input[0], input[1], input[2], input[3]);
 
-	v4f out = *m_persp * in;
+	Vec4 out = *m_persp * in;
 	float depth = 1.f/out.w;
 	out = out * depth;
 	out.w = depth;
 
-	for (int i = 0; i < 4; i++)
-		output[i] = out[i];
+	output[0] = out.x;
+	output[1] = out.y;
+	output[2] = out.z;
+	output[3] = out.w;
 	for (uint i = 4; i < m_output_data_size; i++)
 		output[i] = input[i];
 }
@@ -37,7 +39,7 @@ void TestVertexShader::setIODataSize()
 void TestVertexShader::setupUniforms()
 {
 	m_uniform.resize(1);
-	m_uniform_size.push_back(sizeof(m4f));
+	m_uniform_size.push_back(sizeof(Mat4));
 	m_uniform[0] = malloc(m_uniform_size[0]);
-	m_persp = (m4f*)(m_uniform[0]);
+	m_persp = (Mat4*)(m_uniform[0]);
 }

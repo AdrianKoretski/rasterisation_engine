@@ -13,6 +13,6 @@ protected:
 	void setIODataSize();
 	void setupUniforms();
 private:
-	m4f* m_persp;
+	Mat4* m_persp;
 };
 

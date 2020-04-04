@@ -1,7 +1,5 @@
 #include <iostream>
 #include <random>
-#include "glm/glm.hpp"
-#include "glm/gtc/type_ptr.hpp"
 #include "Definitions.h"
 #include "Pipeline.h"
 #include "Camera.h"
@@ -18,12 +16,12 @@ struct vert
 {
 	vert(float a, float b, float c, float d)
 	{
-		position = v4f(a, b, c, d);
+		position = Vec4(a, b, c, d);
 	}
-	v4f position;
-	v3f color;
-	v3f normal;
-	v2f uv;
+	Vec4 position;
+	Vec3 color;
+	Vec3 normal;
+	Vec2 uv;
 };
 
 int main()
@@ -33,7 +31,7 @@ int main()
 
 	Camera* camera = &Camera();
 	camera->setPerspective(90, 16.f / 9);
-	camera->setCamera(v3f(0, 0, 0), v3f(0, 0, -1), v3f(0, 1, 0));
+	camera->setCamera(Vec3(0, 0, 0), Vec3(0, 0, -1), Vec3(0, 1, 0));
 	Pipeline pipeline(1920, 1080, camera);
 
 	TestVertexShader* vs = new TestVertexShader();
@@ -100,10 +98,10 @@ int main()
 
 	for (int i = 0; i < 24; i += 4)
 	{
-		vertices[i + 0].uv = v2f(0, 0);
-		vertices[i + 1].uv = v2f(1, 0);
-		vertices[i + 2].uv = v2f(0, 1);
-		vertices[i + 3].uv = v2f(1, 1);
+		vertices[i + 0].uv = Vec2(0, 0);
+		vertices[i + 1].uv = Vec2(1, 0);
+		vertices[i + 2].uv = Vec2(0, 1);
+		vertices[i + 3].uv = Vec2(1, 1);
 	}
 
 	for (int i = 0; i < 24; i += 4)
@@ -118,44 +116,44 @@ int main()
 
 	for (int i = 0; i < 4; i++)
 	{
-		vertices[i].color = v3f(1, 0, 0);
-		vertices[i].normal = v3f(1, 0, 0);
+		vertices[i].color = Vec3(1, 0, 0);
+		vertices[i].normal = Vec3(1, 0, 0);
 	}
 
 	for (int i = 0; i < 4; i++)
 	{
-		vertices[i + 4].color = v3f(0, 1, 1);
-		vertices[i + 4].normal = v3f(0.5, 0, 0);
+		vertices[i + 4].color = Vec3(0, 1, 1);
+		vertices[i + 4].normal = Vec3(0.5, 0, 0);
 	}
 
 	for (int i = 0; i < 4; i++)
 	{
-		vertices[i + 8].color = v3f(0, 1, 0);
-		vertices[i + 8].normal = v3f(0, 1, 0);
+		vertices[i + 8].color = Vec3(0, 1, 0);
+		vertices[i + 8].normal = Vec3(0, 1, 0);
 	}
 
 	for (int i = 0; i < 4; i++)
 	{
-		vertices[i + 12].color = v3f(1, 0, 1);
-		vertices[i + 12].normal = v3f(0, 0.5, 0);
+		vertices[i + 12].color = Vec3(1, 0, 1);
+		vertices[i + 12].normal = Vec3(0, 0.5, 0);
 	}
 
 	for (int i = 0; i < 4; i++)
 	{
-		vertices[i + 16].color = v3f(0, 0, 1);
-		vertices[i + 16].normal = v3f(0, 0, 1);
+		vertices[i + 16].color = Vec3(0, 0, 1);
+		vertices[i + 16].normal = Vec3(0, 0, 1);
 	}
 
 	for (int i = 0; i < 4; i++)
 	{
-		vertices[i + 20].color = v3f(1, 1, 0);
-		vertices[i + 20].normal = v3f(0, 0, 0.5);
+		vertices[i + 20].color = Vec3(1, 1, 0);
+		vertices[i + 20].normal = Vec3(0, 0, 0.5);
 	}
 
 	float angl = 0;
 	for (angl = 0; angl < 3.14*2; angl += 0.1)
 	{
-		camera->setCamera(v3f(2 * sin(angl), 0, 2 * cos(angl)), -v3f(sin(angl), 0, cos(angl)), v3f(0, 1, 0));
+		camera->setCamera(Vec3(2 * sin(angl), 0, 2 * cos(angl)), -Vec3(sin(angl), 0, cos(angl)), Vec3(0, 1, 0));
 		vs->setUniform(&camera->getViewPerspectiveMatrix(), 0);
 		pipeline.renderObject(VBO, VAO);
 		pipeline.saveRender("folder/" + std::to_string(angl));

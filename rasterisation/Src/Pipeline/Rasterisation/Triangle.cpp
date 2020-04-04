@@ -11,7 +11,7 @@ Triangle::Triangle(float* v0, float* v1, float* v2)
 	setupPreCompute();
 }
 
-v2f Triangle::getCSPosition(uint index)
+Vec2 Triangle::getCSPosition(uint index)
 {
 	return m_CS_position[index];
 }
@@ -46,8 +46,8 @@ void Triangle::setupVectors()
 {
 	for (int i = 0; i < 3; i++)
 	{
-		m_CS_position[i] = v2f(m_vertex[i][0], m_vertex[i][1]);
-		m_WS_position[i] = v3f(m_CS_position[i], 1) / m_vertex[i][3];
+		m_CS_position[i] = Vec2(m_vertex[i][0], m_vertex[i][1]);
+		m_WS_position[i] = Vec3(m_CS_position[i], 1) / m_vertex[i][3];
 	}
 
 	for (int i = 0; i < 3; i++)
@@ -67,7 +67,7 @@ bool Triangle::isContained(float x, float y)
 
 bool Triangle::isOnCorrectSide(float x, float y, uint index)
 {
-	v2f vect(x - m_CS_position[index][0], y - m_CS_position[index][1]);
+	Vec2 vect(x - m_CS_position[index].x, y - m_CS_position[index].y);
 	float cross_product = cross(m_CS_vector[index], vect);
 
 	return cross_product > 0 || (cross_product == 0 && m_tie_breaker[index]);
@@ -75,7 +75,7 @@ bool Triangle::isOnCorrectSide(float x, float y, uint index)
 
 float Triangle::interpolate(float x, float y, uint index)
 {
-	v2f CS_p = v2f(x, y);
+	Vec2 CS_p = Vec2(x, y);
 	float value = 0;
 
 	for (int i = 0; i < 3; i++)
@@ -86,8 +86,8 @@ float Triangle::interpolate(float x, float y, uint index)
 
 void Triangle::depth_correct_interpolate(float* data, uint size)
 {
-	v2f CS_p = v2f(data[0], data[1]);
-	v3f WS_p = v3f(CS_p, 1);
+	Vec2 CS_p = Vec2(data[0], data[1]);
+	Vec3 WS_p = Vec3(CS_p, 1);
 	float weights[3];
 	float value = 0;
 
@@ -98,17 +98,17 @@ void Triangle::depth_correct_interpolate(float* data, uint size)
 
 
 	for (int i = 0; i < 3; i++)
-		weights[i] = glm::length((cross(m_WS_pre_weight[next(i)], WS_p - m_WS_position[next(i)])));
+		weights[i] = (cross(m_WS_pre_weight[next(i)], WS_p - m_WS_position[next(i)]));
 	for (int i = 4; i < size; i++)
 		data[i] = m_vertex[0][i] * weights[0] + m_vertex[1][i] * weights[1] + m_vertex[2][i] * weights[2];
 }
 
-v2f Triangle::getVector(uint index)
+Vec2 Triangle::getVector(uint index)
 {
 	return m_CS_vector[index];
 }
 
-float Triangle::cross(v2f a, v2f b)
+float Triangle::cross(Vec2 a, Vec2 b)
 {
 	return a.x * b.y - a.y * b.x;
 }

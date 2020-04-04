@@ -24,10 +24,10 @@ void Rasteriser::rasterise(buffer<float>& output_fragments, float* vertex_0, flo
 
 	for (int i = 0; i < 3; i++)
 	{
-		v2f curr_position = triangle.getCSPosition(i);
+		Vec2 curr_position = triangle.getCSPosition(i);
 		if (triangle.getVector(i).y <= 0)
 			continue;
-		v2f position(ceil(curr_position.x) + 0.5f, floor(curr_position.y) + 0.5f);
+		Vec2 position(ceil(curr_position.x) + 0.5f, floor(curr_position.y) + 0.5f);
 
 		while (position.y <= triangle.getCSPosition(triangle.next(i)).y)
 		{
@@ -46,10 +46,10 @@ void Rasteriser::rasterise(buffer<float>& output_fragments, float* vertex_0, flo
 
 bool Rasteriser::isCCW(float* vertex_0, float* vertex_1, float* vertex_2)
 {
-	v3f p0(vertex_0[0], vertex_0[1], 0);
-	v3f v1 = v3f(vertex_1[0], vertex_1[1], 0) - p0;
-	v3f v2 = v3f(vertex_2[0], vertex_2[1], 0) - p0;
-	if (glm::cross(v1, v2).z <= 0)
+	Vec3 p0(vertex_0[0], vertex_0[1], 0);
+	Vec3 v1 = Vec3(vertex_1[0], vertex_1[1], 0) - p0;
+	Vec3 v2 = Vec3(vertex_2[0], vertex_2[1], 0) - p0;
+	if (cross(v1, v2).z <= 0)
 		return false;
 	return true;
 }
