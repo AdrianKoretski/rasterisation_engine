@@ -156,7 +156,7 @@ int main()
 		camera->setCamera(Vec3(2 * sin(angl), 0, 2 * cos(angl)), -Vec3(sin(angl), 0, cos(angl)), Vec3(0, 1, 0));
 		vs->setUniform(&camera->getViewPerspectiveMatrix(), 0);
 		pipeline.renderObject(VBO, VAO);
-		pipeline.saveRender("folder/" + std::to_string(angl));
+		pipeline.saveRender(std::to_string(angl));
 		pipeline.clearBuffers();
 	}
 }
