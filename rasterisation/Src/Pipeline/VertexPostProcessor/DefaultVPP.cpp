@@ -15,11 +15,11 @@ void DefaultVPP::reset() {
 
 void DefaultVPP::postProcessVertices(buffer<float>& output_VBO, buffer<uint>& output_VAO, buffer<float>& input_VBO, buffer<uint>& input_VAO)
 {
-	for (uint i = 0; i < input_VBO.size(); i += m_output_data_size)
+	for (uint i = 0; i < input_VBO.size(); i += m_input_data_size)
 	{
 		output_VBO.push_back((input_VBO[i + 0] + 1) * *m_width_resolution / 2);
 		output_VBO.push_back((input_VBO[i + 1] + 1) * *m_height_resolution / 2);
-		for (uint j = 2; j < m_output_data_size; j++)
+		for (uint j = 2; j < m_input_data_size; j++)
 			output_VBO.push_back(input_VBO[i + j]);
 	}
 	for (uint i = 0; i < input_VAO.size(); i++)
@@ -28,8 +28,8 @@ void DefaultVPP::postProcessVertices(buffer<float>& output_VBO, buffer<uint>& ou
 
 void DefaultVPP::setIODataSize()
 {
-	m_output_data_size = 12;
-	m_input_data_size = 12;
+	m_input_data_size = 9;
+	m_output_data_size = 9;
 }
 
 void DefaultVPP::setupUniforms()

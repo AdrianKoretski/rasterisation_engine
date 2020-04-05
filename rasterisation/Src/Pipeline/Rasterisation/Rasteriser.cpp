@@ -56,8 +56,8 @@ bool Rasteriser::isCCW(float* vertex_0, float* vertex_1, float* vertex_2)
 
 void Rasteriser::setIODataSize()
 {
-	m_input_data_size = 12;
-	m_output_data_size = 12;
+	m_input_data_size = 9;
+	m_output_data_size = 9;
 }
 
 void Rasteriser::setupUniforms()

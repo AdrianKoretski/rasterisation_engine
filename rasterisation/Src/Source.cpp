@@ -15,14 +15,13 @@
 
 struct vert
 {
-	vert(float a, float b, float c, float d)
+	vert(float a, float b, float c)
 	{
-		position = Vec4(a, b, c, d);
+		position = Vec3(a, b, c);
 	}
-	Vec4 position;
-	Vec3 color;
-	Vec3 normal;
+	Vec3 position;
 	Vec2 uv;
+	Vec3 normal;
 };
 
 int main()
@@ -66,37 +65,37 @@ int main()
 
 	buffer<float> VBO;
 	buffer<uint> VAO;
-	VBO.resize(24 * 12);
+	VBO.resize(24 * 9);
 	vert* vertices = (vert*)VBO.data();
-	vertices[0] = vert(0.5f, 0.5f, 0.5f, 1);
-	vertices[1] = vert(0.5f, 0.5f, -0.5f, 1);
-	vertices[2] = vert(0.5f, -0.5f, 0.5f, 1);
-	vertices[3] = vert(0.5f, -0.5f, -0.5f, 1);
+	vertices[0] = vert(0.5f, 0.5f, 0.5f);
+	vertices[1] = vert(0.5f, 0.5f, -0.5f);
+	vertices[2] = vert(0.5f, -0.5f, 0.5f);
+	vertices[3] = vert(0.5f, -0.5f, -0.5f);
 
-	vertices[4] = vert(-0.5f, -0.5f, 0.5f, 1);
-	vertices[5] = vert(-0.5f, -0.5f, -0.5f, 1);
-	vertices[6] = vert(-0.5f, 0.5f, 0.5f, 1);
-	vertices[7] = vert(-0.5f, 0.5f, -0.5f, 1);
+	vertices[4] = vert(-0.5f, -0.5f, 0.5f);
+	vertices[5] = vert(-0.5f, -0.5f, -0.5f);
+	vertices[6] = vert(-0.5f, 0.5f, 0.5f);
+	vertices[7] = vert(-0.5f, 0.5f, -0.5f);
 
-	vertices[8] = vert(-0.5f, 0.5f, 0.5f, 1);
-	vertices[9] = vert(-0.5f, 0.5f, -0.5f, 1);
-	vertices[10] = vert(0.5f, 0.5f, 0.5f, 1);
-	vertices[11] = vert(0.5f, 0.5f, -0.5f, 1);
+	vertices[8] = vert(-0.5f, 0.5f, 0.5f);
+	vertices[9] = vert(-0.5f, 0.5f, -0.5f);
+	vertices[10] = vert(0.5f, 0.5f, 0.5f);
+	vertices[11] = vert(0.5f, 0.5f, -0.5f);
 
-	vertices[12] = vert(0.5f, -0.5f, 0.5f, 1);
-	vertices[13] = vert(0.5f, -0.5f, -0.5f, 1);
-	vertices[14] = vert(-0.5f, -0.5f, 0.5f, 1);
-	vertices[15] = vert(-0.5f, -0.5f, -0.5f, 1);
+	vertices[12] = vert(0.5f, -0.5f, 0.5f);
+	vertices[13] = vert(0.5f, -0.5f, -0.5f);
+	vertices[14] = vert(-0.5f, -0.5f, 0.5f);
+	vertices[15] = vert(-0.5f, -0.5f, -0.5f);
 
-	vertices[16] = vert(-0.5f, -0.5f, 0.5f, 1);
-	vertices[17] = vert(-0.5f, 0.5f, 0.5f, 1);
-	vertices[18] = vert(0.5f, -0.5f, 0.5f, 1);
-	vertices[19] = vert(0.5f, 0.5f, 0.5f, 1);
+	vertices[16] = vert(-0.5f, -0.5f, 0.5f);
+	vertices[17] = vert(-0.5f, 0.5f, 0.5f);
+	vertices[18] = vert(0.5f, -0.5f, 0.5f);
+	vertices[19] = vert(0.5f, 0.5f, 0.5f);
 
-	vertices[20] = vert(0.5f, -0.5f, -0.5f, 1);
-	vertices[21] = vert(0.5f, 0.5f, -0.5f, 1);
-	vertices[22] = vert(-0.5f, -0.5f, -0.5f, 1);
-	vertices[23] = vert(-0.5f, 0.5f, -0.5f, 1);
+	vertices[20] = vert(0.5f, -0.5f, -0.5f);
+	vertices[21] = vert(0.5f, 0.5f, -0.5f);
+	vertices[22] = vert(-0.5f, -0.5f, -0.5f);
+	vertices[23] = vert(-0.5f, 0.5f, -0.5f);
 
 	for (int i = 0; i < 24; i += 4)
 	{
@@ -118,37 +117,31 @@ int main()
 
 	for (int i = 0; i < 4; i++)
 	{
-		vertices[i].color = Vec3(1, 0, 0);
 		vertices[i].normal = Vec3(1, 0, 0);
 	}
 
 	for (int i = 0; i < 4; i++)
 	{
-		vertices[i + 4].color = Vec3(0, 1, 1);
 		vertices[i + 4].normal = Vec3(0.5, 0, 0);
 	}
 
 	for (int i = 0; i < 4; i++)
 	{
-		vertices[i + 8].color = Vec3(0, 1, 0);
 		vertices[i + 8].normal = Vec3(0, 1, 0);
 	}
 
 	for (int i = 0; i < 4; i++)
 	{
-		vertices[i + 12].color = Vec3(1, 0, 1);
 		vertices[i + 12].normal = Vec3(0, 0.5, 0);
 	}
 
 	for (int i = 0; i < 4; i++)
 	{
-		vertices[i + 16].color = Vec3(0, 0, 1);
 		vertices[i + 16].normal = Vec3(0, 0, 1);
 	}
 
 	for (int i = 0; i < 4; i++)
 	{
-		vertices[i + 20].color = Vec3(1, 1, 0);
 		vertices[i + 20].normal = Vec3(0, 0, 0.5);
 	}
 

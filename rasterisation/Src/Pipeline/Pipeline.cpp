@@ -50,7 +50,7 @@ void Pipeline::renderTriangle(buffer<float>& input_VBO, uint* input_VAO)
 		&input_VBO[m_vertex_size * input_VAO[2]]
 	);
 	m_per_sample_processor->postProcessFragments(post_processed_fragments, shaded_fragments);
-	for (uint j = 0; j < post_processed_fragments.size(); j += 5)
+	for (uint j = 0; j < post_processed_fragments.size(); j += 7)
 		setPixel(&post_processed_fragments[j]);
 }
 

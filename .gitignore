@@ -4,6 +4,8 @@ MathLibrary/Debug/*
 MathLibrary/Release/*
 Export/Debug/*
 Export/Release/*
+ObjLoader/Debug/*
+ObjLoader/Release/*
 *.exr
 .vs*
 Debug/*

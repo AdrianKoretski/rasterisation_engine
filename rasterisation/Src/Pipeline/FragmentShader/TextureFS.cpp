@@ -14,7 +14,7 @@ void TextureFS::reset() {
 
 void TextureFS::shadeFragment(float* output_fragment, float* inupt_fragment)
 {
-	Vec2* uv = (Vec2*)(&inupt_fragment[10]);
+	Vec2* uv = (Vec2*)(&inupt_fragment[4]);
 	memcpy(output_fragment, inupt_fragment, m_input_data_size * sizeof(float));
 	if (((uv->y * 4) - 0.5 - floor(uv->y * 4)) * ((uv->x * 4) - 0.5 - floor(uv->x * 4)) > 0)
 		output_fragment[4] = 1;
@@ -26,8 +26,8 @@ void TextureFS::shadeFragment(float* output_fragment, float* inupt_fragment)
 
 void TextureFS::setIODataSize()
 {
-	m_input_data_size = 12;
-	m_output_data_size = 12;
+	m_input_data_size = 9;
+	m_output_data_size = 9;
 }
 
 void TextureFS::setupUniforms()
