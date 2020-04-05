@@ -27,12 +27,6 @@
     <ClInclude Include="Include\Definitions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Utilities.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\tinyexr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Include\TextureFS.h">
       <Filter>Header Files</Filter>
     </ClInclude>

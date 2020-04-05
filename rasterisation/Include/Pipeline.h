@@ -30,6 +30,7 @@ public:
 	void renderObject(buffer<float>& VBO, buffer<uint>& VAO);
 	void saveRender(std::string file_name);
 	void clearBuffers();
+	buffer<float> m_image_buffer;
 private:
 
 	void setPixel(float* pixel_data);
@@ -53,5 +54,4 @@ private:
 	uint m_vertex_size;
 	uint m_image_buffer_width;
 	uint m_image_buffer_height;
-	buffer<float*> m_image_buffer;
 };

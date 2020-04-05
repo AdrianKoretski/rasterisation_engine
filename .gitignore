@@ -2,6 +2,8 @@ rasterisation/Debug/*
 rasterisation/Release/*
 MathLibrary/Debug/*
 MathLibrary/Release/*
+Export/Debug/*
+Export/Release/*
 *.exr
 .vs*
 Debug/*

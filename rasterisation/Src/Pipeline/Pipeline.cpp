@@ -1,18 +1,17 @@
 #include "Pipeline.h"
-#include "Utilities.h"
+#include "EXR.h"
 
 Pipeline::Pipeline(uint image_buffer_width, uint image_buffer_height, Camera* camera)
 {
 	m_image_buffer_width = image_buffer_width;
 	m_image_buffer_height = image_buffer_height;
 
-	m_image_buffer.resize(m_image_buffer_width * m_image_buffer_height);
+	m_image_buffer.resize(m_image_buffer_width * m_image_buffer_height * 3);
 	for (uint i = 0; i < m_image_buffer_width * m_image_buffer_height; i++)
 	{
-		m_image_buffer[i] = new float[3];
-		m_image_buffer[i][0] = 0;
-		m_image_buffer[i][1] = 0;
-		m_image_buffer[i][2] = 0;
+		m_image_buffer[i * 3 + 0] = 0;
+		m_image_buffer[i * 3 + 1] = 0;
+		m_image_buffer[i * 3 + 2] = 0;
 	}
 }
 
@@ -57,18 +56,14 @@ void Pipeline::renderTriangle(buffer<float>& input_VBO, uint* input_VAO)
 
 void Pipeline::clearBuffers()
 {
-	for (uint i = 0; i < m_image_buffer_width * m_image_buffer_height; i++)
-	{
-		m_image_buffer[i][0] = 0;
-		m_image_buffer[i][1] = 0;
-		m_image_buffer[i][2] = 0;
-	}
+	for (uint i = 0; i < m_image_buffer_width * m_image_buffer_height * 3; i++)
+		m_image_buffer[i] = 0;
 	m_per_sample_processor->reset();
 }
 
 void Pipeline::saveRender(std::string file_name)
 {
-	saveEXR(m_image_buffer, file_name + ".exr", m_image_buffer_width, m_image_buffer_height);
+	saveEXR(&m_image_buffer[0], file_name + ".exr", m_image_buffer_width, m_image_buffer_height);
 }
 
 void Pipeline::setPixel(float* pixel_data)
@@ -78,9 +73,9 @@ void Pipeline::setPixel(float* pixel_data)
 	uint y = uint(m_image_buffer_height - 1 - floor(pixel_data[1]));
 	if (x >= m_image_buffer_width || x < 0 || y >= m_image_buffer_height || y < 0)
 		return;
-	m_image_buffer[x + y * m_image_buffer_width][0] = pixel_data[2];
-	m_image_buffer[x + y * m_image_buffer_width][1] = pixel_data[3];
-	m_image_buffer[x + y * m_image_buffer_width][2] = pixel_data[4];
+	m_image_buffer[(x + y * m_image_buffer_width) * 3 + 0] = pixel_data[2];
+	m_image_buffer[(x + y * m_image_buffer_width) * 3 + 1] = pixel_data[3];
+	m_image_buffer[(x + y * m_image_buffer_width) * 3 + 2] = pixel_data[4];
 }
 
 uint Pipeline::addVertexShader(VertexShader* vertex_shader)

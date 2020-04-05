@@ -11,6 +11,7 @@
 #include "TestFragmentShader.h"
 #include "TextureFS.h"
 #include "DefaultPSP.h"
+#include "GifMaker.h"
 
 struct vert
 {
@@ -28,6 +29,7 @@ int main()
 {
 	uint width = 1920;
 	uint height = 1080;
+	GifMaker g(width, height);
 
 	Camera* camera = &Camera();
 	camera->setPerspective(90, 16.f / 9);
@@ -151,12 +153,14 @@ int main()
 	}
 
 	float angl = 0;
-	for (angl = 0; angl < 3.14*2; angl += 0.1)
+	for (angl = 0; angl < 3.14*2; angl += 0.03)
 	{
 		camera->setCamera(Vec3(2 * sin(angl), 0, 2 * cos(angl)), -Vec3(sin(angl), 0, cos(angl)), Vec3(0, 1, 0));
 		vs->setUniform(&camera->getViewPerspectiveMatrix(), 0);
 		pipeline.renderObject(VBO, VAO);
 		pipeline.saveRender(std::to_string(angl));
+		g.addFrame(&pipeline.m_image_buffer[0]);
 		pipeline.clearBuffers();
 	}
+	g.save("block.gif");
 }

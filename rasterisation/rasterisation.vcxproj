@@ -29,8 +29,6 @@
     <ClInclude Include="Include\Definitions.h" />
     <ClInclude Include="Include\Pipeline.h" />
     <ClInclude Include="Include\Triangle.h" />
-    <ClInclude Include="Include\tinyexr.h" />
-    <ClInclude Include="Include\Utilities.h" />
     <ClInclude Include="Include\TestVertexShader.h" />
     <ClInclude Include="Include\VertexPostProcessor.h" />
     <ClInclude Include="Include\VertexShader.h" />
@@ -55,6 +53,9 @@
     <ClCompile Include="Src\Pipeline\FragmentShader\TextureFS.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Export\Export.vcxproj">
+      <Project>{53c7b82b-adc6-41c5-92af-eda23ba30a08}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\MathLibrary\MathLibrary.vcxproj">
       <Project>{2ce0c6d3-0dde-4fa5-8234-fd85d41805c5}</Project>
     </ProjectReference>
@@ -118,10 +119,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)MathLibrary;$(SolutionDir)rasterisation\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)MathLibrary;$(SolutionDir)rasterisation\Include;$(SolutionDir)Export;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -130,10 +132,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)MathLibrary;$(SolutionDir)rasterisation\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)MathLibrary;$(SolutionDir)rasterisation\Include;$(SolutionDir)Export;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -144,12 +147,13 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)MathLibrary;$(SolutionDir)rasterisation\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)MathLibrary;$(SolutionDir)rasterisation\Include;$(SolutionDir)Export;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -160,12 +164,13 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)MathLibrary;$(SolutionDir)rasterisation\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)MathLibrary;$(SolutionDir)rasterisation\Include;$(SolutionDir)Export;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

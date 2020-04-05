@@ -8,6 +8,9 @@
     <Filter Include="Src">
       <UniqueIdentifier>{faee8bc9-0e83-4bf4-ab0b-07e216c1a2df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{96501bcf-be05-4ff8-969f-57d26c9fa7e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Vec3.cpp">
@@ -19,12 +22,12 @@
     <ClCompile Include="Mat4.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Vec2.h" />
     <ClInclude Include="Vec3.h">
       <Filter>Src</Filter>
     </ClInclude>
-    <ClInclude Include="VecOperations.h" />
-    <ClInclude Include="Vec2.h" />
     <ClInclude Include="Vec4.h" />
+    <ClInclude Include="VecOperations.h" />
     <ClInclude Include="Mat4.h" />
   </ItemGroup>
 </Project>
