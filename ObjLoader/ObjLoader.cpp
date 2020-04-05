@@ -25,10 +25,6 @@ ObjModel* ObjLoader::loadModel(std::string file_name)
 		return NULL;
 	}
 
-	positions.push_back(Vec3(0, 0, 0));
-	normals.push_back(Vec3(0, 0, 0));
-	uv.push_back(Vec2(0, 0));
-
 	std::string line;
 	while (std::getline(input_file, line))
 		processLine(line);
@@ -50,18 +46,18 @@ ObjModel* ObjLoader::loadModel(std::string file_name)
 		if (index == -1)
 		{
 			model->indices.push_back(index_counter);
+			model->vertices.push_back(positions[input_indices[i * m_vertex_size + 0]-1].x);
+			model->vertices.push_back(positions[input_indices[i * m_vertex_size + 0]-1].y);
+			model->vertices.push_back(positions[input_indices[i * m_vertex_size + 0]-1].z);
+			model->vertices.push_back(uv[input_indices[i * m_vertex_size + 1]-1].x);
+			model->vertices.push_back(uv[input_indices[i * m_vertex_size + 1]-1].y);
+			model->vertices.push_back(normals[input_indices[i * m_vertex_size + 2]-1].x);
+			model->vertices.push_back(normals[input_indices[i * m_vertex_size + 2]-1].y);
+			model->vertices.push_back(normals[input_indices[i * m_vertex_size + 2]-1].z);
 			index_counter++;
-			model->vertices.push_back(positions[input_indices[i * m_vertex_size + 0]].x);
-			model->vertices.push_back(positions[input_indices[i * m_vertex_size + 0]].y);
-			model->vertices.push_back(positions[input_indices[i * m_vertex_size + 0]].z);
-			model->vertices.push_back(uv[input_indices[i * m_vertex_size + 1]].x);
-			model->vertices.push_back(uv[input_indices[i * m_vertex_size + 1]].y);
-			model->vertices.push_back(normals[input_indices[i * m_vertex_size + 2]].x);
-			model->vertices.push_back(normals[input_indices[i * m_vertex_size + 2]].y);
-			model->vertices.push_back(normals[input_indices[i * m_vertex_size + 2]].z);
 		}
 		else
-			model->indices.push_back(index);
+			model->indices.push_back(model->indices[index]);
 	}
 	return model;
 }

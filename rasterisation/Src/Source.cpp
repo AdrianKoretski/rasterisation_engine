@@ -12,6 +12,7 @@
 #include "TextureFS.h"
 #include "DefaultPSP.h"
 #include "GifMaker.h"
+#include "ObjLoader.h"
 
 struct vert
 {
@@ -115,6 +116,28 @@ int main()
 		VAO.push_back(2 + i);
 	}
 
+	ObjLoader obj_loader = ObjLoader();
+	ObjModel* model = obj_loader.loadModel("test.obj");
+
+	for (int i = 0; i < model->indices.size(); i++)
+	{
+		std::cout << model->indices[i] << std::endl;
+	}
+
+	std::cout << model->vertices.size() / 8 << std::endl;
+
+	/*for (int i = 0; i < model->indices.size(); i++)
+	{
+		std::cout << model->vertices[i * 8 + 0] << " ";
+		std::cout << model->vertices[i * 8 + 1] << " ";
+		std::cout << model->vertices[i * 8 + 2] << "  ";
+		std::cout << model->vertices[i * 8 + 3] << " ";
+		std::cout << model->vertices[i * 8 + 4] << "  ";
+		std::cout << model->vertices[i * 8 + 5] << " ";
+		std::cout << model->vertices[i * 8 + 6] << " ";
+		std::cout << model->vertices[i * 8 + 7] << std::endl;
+	}*/
+
 	for (int i = 0; i < 4; i++)
 	{
 		vertices[i].normal = Vec3(1, 0, 0);
@@ -150,7 +173,7 @@ int main()
 	{
 		camera->setCamera(Vec3(2 * sin(angl), 0, 2 * cos(angl)), -Vec3(sin(angl), 0, cos(angl)), Vec3(0, 1, 0));
 		vs->setUniform(&camera->getViewPerspectiveMatrix(), 0);
-		pipeline.renderObject(VBO, VAO);
+		pipeline.renderObject(model->vertices, model->indices);
 		pipeline.saveRender(std::to_string(angl));
 		g.addFrame(&pipeline.m_image_buffer[0]);
 		pipeline.clearBuffers();

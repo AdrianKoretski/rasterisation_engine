@@ -144,7 +144,6 @@
   <ItemGroup>
     <ClCompile Include="ObjLoader.cpp" />
     <ClCompile Include="ObjModel.cpp" />
-    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ObjLoader.h" />
