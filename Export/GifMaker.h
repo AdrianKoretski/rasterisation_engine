@@ -13,6 +13,6 @@ public:
 private:
 	int m_width;
 	int m_height;
-
-	std::vector<uint8_t*> m_frames;
+	int m_frame_counter = 0;
+	char* m_frame;
 };
