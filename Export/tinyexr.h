@@ -7422,7 +7422,7 @@ namespace tinyexr {
 		unsigned char pad[3];
 	} ChannelInfo;
 
-	typedef struct {
+	typedef struct HeaderInfo {
 		std::vector<tinyexr::ChannelInfo> channels;
 		std::vector<EXRAttribute> attributes;
 
@@ -7474,7 +7474,7 @@ namespace tinyexr {
 			header_len = 0;
 			compression_type = 0;
 		}
-	} HeaderInfo;
+	};
 
 	static bool ReadChannelInfo(std::vector<ChannelInfo>& channels,
 		const std::vector<unsigned char>& data) {
